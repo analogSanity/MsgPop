@@ -8,9 +8,10 @@ function initMsgPop()
 {
 	MsgPop = {};
 	MsgPop.effectSpeed = 250;
-	MsgPop.limit = 3;
+	MsgPop.limit = 4;
 	MsgPop.count = 0;
 	MsgPop.displaySmall = false;
+	MsgPop.position = "top-right";
 	jQuery.fx.interval = 1;
 	
 	MsgPop.open = function (obj) {
@@ -31,6 +32,13 @@ function initMsgPop()
 		else{
 			$(msgPopContainer).clearQueue();
 			$(msgPopContainer).stop();
+		}
+		if(MsgPop.displaySmall)
+		{
+			$(msgPopContainer).addClass("msgPop-"+MsgPop.position);
+		}
+		else{
+			$(msgPopContainer).addClass("msgPop-top-right");
 		}
 		
 		//Set ID
