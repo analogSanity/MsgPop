@@ -6,8 +6,6 @@
 	position:fixed;
 	z-index:999;
 	width:100%;
-	top:0;	
-	right:0;
 }
 #msgPopCloseAllBtn
 {
@@ -17,8 +15,9 @@
 	border-bottom-left-radius:3px;
 	border-bottom-right-radius:3px;
 	padding:6px;
-	position:fixed;
-	right:0;
+	position:relative;
+	float:right;
+	
 	cursor:pointer;	
 }
 #msgPopCloseAllBtn:active
@@ -32,7 +31,6 @@
     color: #fff;
     cursor: pointer;
     text-align: center;
-	border-radius:4px;
 }
 .msgPopLoadMore:active
 {
@@ -50,10 +48,7 @@
 	cursor: default;
 	box-shadow:0 0 3px rgba(0,0,0,.3);
 }
-.msgPopSuccess:active
-{
-	background: #007A00;
-}
+.msgPopSuccess:active{background: #007A00;}
 .msgPopSuccess{
 	background: #008E00;
     color:#fff;
@@ -93,10 +88,8 @@
 	color:#111;
 	border-color:#666;
 }
-#msgPopIconCell
-{
-	width:1%;
-}
+
+#msgPopIconCell{width:1%;}
 .msgPopCloseCell
 {
 	text-align:right;
@@ -111,10 +104,8 @@
 	right:-6px;
 	cursor:pointer;
 }
-.fa
-{
-	font-size:1.5em;
-}
+.fa{font-size:1.5em;}
+
 .msgPopContainerSmall .outerMsgPopTbl
 {
 	border:1px solid rgba(255,255,255,.2) !important;
@@ -176,11 +167,26 @@
 	margin:5px !important;
 	border-radius:5px !important;
 }
+
+.msgPopContainerSmall .msgPopLoadMore
+{
+	margin:0 5px;
+	border-radius:4px;
+}
+
 .msgPopContainerSmall #msgPopCloseAllBtn
 {
 	border-radius:3px !important;
-	margin:5px 10px;
+	margin:5px 6px;
 }
+
+.msgPop-top-right, .msgPop-top-left{top:0;}
+.msgPop-top-right{right:0;}
+.msgPop-top-left{left:0;}
+
+.msgPop-bottom-right, .msgPop-bottom-left{bottom:0;}
+.msgPop-bottom-right{right:0;}
+.msgPop-bottom-left{left:0;}
 
 @media all and (min-width: 0px) and (max-width: 640px) {
 	.msgPopContainerSmall
@@ -188,6 +194,13 @@
 		width:100% !important;
 		right:0 !important;
 	}
+	
+	.msgPopContainerSmall .msgPopLoadMore
+	{
+		margin:0 !important;
+		border-radius:0 !important;
+	}
+	
 	.msgPopContainerSmall .msgPopSuccess, 
 	.msgPopContainerSmall .msgPopWarning, 
 	.msgPopContainerSmall .msgPopError, 
@@ -203,7 +216,10 @@
 		border-bottom-right-radius:3px !important;
 		margin:0;
 	}
-	
+	.msgPopCloseCell a
+	{
+		font-size:16px;
+	}
 	#msgPopContainer, #msgPopCloseAllBtn{
 		font-size:12px;
 	}
