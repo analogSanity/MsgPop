@@ -2,20 +2,20 @@
  *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
  *  License - (JS: MIT License, CSS: MIT License)
  */
-
 var MsgPop = initMsgPop();
 
 function initMsgPop()
 {
 	MsgPop = {};
 	MsgPop.effectSpeed = 250;
-	MsgPop.limit = 4;
+	MsgPop.limit = 3;
 	MsgPop.count = 0;
 	MsgPop.displaySmall = false;
 	jQuery.fx.interval = 1;
 	
 	MsgPop.open = function (obj) {
-		MsgPop.count += 1;
+	    MsgPop.count += 1;
+
 		//Create Message Container
 		msgPopContainer = document.getElementById("msgPopContainer");
 		if (msgPopContainer == null) {
@@ -149,7 +149,7 @@ function initMsgPop()
 				
 				if (obj.AutoClose) {
 					obj.AutoCloseID = setTimeout(function () {
-						MsgPop.close(obj.msgID);
+					    MsgPop.close(obj.msgID);
 					}, obj.CloseTimer);
 				}
 			});
@@ -163,10 +163,9 @@ function initMsgPop()
 				msgDivMore += '</div>';
 
 				$.when($(msgDivCloseAllChk).before(msgDivMore)).done(function () {
-					var moreMsg = $(document.getElementById("msgDivMore"));
-					moreMsg.slideDown(MsgPop.effectSpeed, function () {
-						moreMsg.before(msg);
-					});
+				    var moreMsg = $(document.getElementById("msgDivMore"));
+				    moreMsg.before(msg);
+					moreMsg.slideDown(MsgPop.effectSpeed);
 				});
 			}
 			else {
@@ -178,14 +177,13 @@ function initMsgPop()
 	};
 
 	MsgPop.close = function (msgID, isCloseAll) {
-		MsgPop.count = (MsgPop.count <= 0) ? 0 : MsgPop.count - 1;
-		
 		var message = document.getElementById(msgID);
 		var obj = MsgPop[msgID];
 		var allMessages;
 		var isRegularClose = (isCloseAll) ? false : true;
 
 		if (message != null && typeof (obj) != "undefined") {
+		    MsgPop.count = (MsgPop.count <= 0) ? 0 : MsgPop.count - 1;
 			message = $(message);
 			if (jQuery.isFunction(obj["BeforeClose"])) {
 				$.when(obj.BeforeClose()).done(function () {
@@ -226,28 +224,31 @@ function initMsgPop()
 	};
 
 	MsgPop.cleanUp = function(obj) {
-		if(MsgPop.count == 0)
-		{
-			$(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed, function(){ $(this).remove()});
-		}
-		else if (MsgPop.count == 1) {
-			$(document.getElementById("msgPopCloseAllBtn")).remove();
-		}
-		else if (MsgPop.count == MsgPop.limit) {
-			$(document.getElementById("msgDivMore")).remove();
-		}
-		clearTimeout(obj.AutoCloseID);
+	    if (MsgPop.count == 0)
+	    {
+	        $(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed, function(){ $(this).remove()});
+	    }
+	    else if (MsgPop.count == 1) {
+	        $(document.getElementById("msgPopCloseAllBtn")).remove();
+	    }
+	    else if (MsgPop.count == MsgPop.limit) {
+	        $(document.getElementById("msgDivMore")).remove();
+	    }
+	    if (typeof (obj) != "undefined")
+	    {
+            clearTimeout(obj.AutoCloseID);
+	    }
 		delete obj;
 	}
 
 	MsgPop.closeAll = function () {
-		var id;
-		$(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed);
-		$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function(){
-			$(msgPopContainer).removeAttr("style");
-			id = $(this).attr("id");
-			MsgPop.close(id,true);
-		});
+	    var id;
+	    $(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed);
+	    $('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
+	        $(msgPopContainer).removeAttr("style");
+	        id = $(this).attr("id");
+	        MsgPop.close(id, true);
+	    });
 	}
 
 	MsgPop.showMoreMessages = function()
