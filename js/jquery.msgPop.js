@@ -1,3 +1,8 @@
+/*!
+ *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
+ *  License - (JS: MIT License, CSS: MIT License)
+ */
+
 var MsgPop = initMsgPop();
 
 function initMsgPop()
