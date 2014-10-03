@@ -17,8 +17,9 @@
 	padding:6px;
 	position:relative;
 	float:right;
-	
 	cursor:pointer;	
+	display:none;
+	box-shadow:0 0 5px rgba(0,0,0,.5);
 }
 #msgPopCloseAllBtn:active
 {
@@ -46,7 +47,7 @@
 	border:1px solid #333;
 	display:none;
 	cursor: default;
-	box-shadow:0 0 3px rgba(0,0,0,.3);
+	box-shadow:0 0 5px rgba(0,0,0,.5);
 }
 .msgPopSuccess:active{background: #007A00;}
 .msgPopSuccess{
@@ -162,8 +163,9 @@
 .msgPopContainerSmall .msgPopSuccess, 
 .msgPopContainerSmall .msgPopWarning, 
 .msgPopContainerSmall .msgPopError, 
-.msgPopContainerSmall .msgPopMessage{
-    box-shadow: 3px 3px 5px rgba(0,0,0,.5) !important;
+.msgPopContainerSmall .msgPopMessage,
+.msgPopContainerSmall .msgPopLoadMore{
+    box-shadow: 3px 3px 5px rgba(0,0,0,.3) !important;
 	margin:5px !important;
 	border-radius:5px !important;
 }
