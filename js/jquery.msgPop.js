@@ -16,8 +16,6 @@ function initMsgPop()
 	MsgPop.containerCreated = false;
 	MsgPop.closeAllBtnCreated = false;
 	MsgPop.loadMoreBtnCreated = false;
-	jQuery.fx.interval = 1;
-
 	
 	MsgPop.createContainer = function() {
 		var msgPopContainer;
@@ -37,7 +35,7 @@ function initMsgPop()
 		msgPopContainer = document.getElementById("msgPopContainer");
 		
 		$(msgPopContainer).stop().clearQueue();
-		
+
 		if(MsgPop.displaySmall)
 		{
 			$(msgPopContainer).addClass("msgPop-"+MsgPop.position);
@@ -53,7 +51,7 @@ function initMsgPop()
 		if (MsgPop.closeAllBtnCreated == false) {
 			MsgPop.closeAllBtnCreated = true;
 			
-			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
+			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll({Animate:true})">Close All Messages</div>';
 			$(container).append(msgDivCloseAll);
 		}
 		
@@ -195,7 +193,7 @@ function initMsgPop()
 		else{
 			$(document.getElementById('msgDivMore')).slideDown(MsgPop.effectSpeed);
 		}
-				
+
 		if(MsgPop.count > 1){
 			closeAllBtn.show();
 		}
@@ -217,7 +215,7 @@ function initMsgPop()
 			var allMessages;
 			var isRegularClose = (isCloseAll) ? false : true;
 			var message = $(document.getElementById(msgID));
-			
+
 			if(message.length != 0)
 			{
 				if (jQuery.isFunction(obj["BeforeClose"])) 
@@ -230,11 +228,6 @@ function initMsgPop()
 					
 					if (jQuery.isFunction(obj["AfterClose"])) {
 						obj.AfterClose();
-					}
-					
-					if(isRegularClose && MsgPop.count >= MsgPop.limit)
-					{
-						MsgPop.showMoreMessages();
 					}
 				});
 				
@@ -250,27 +243,32 @@ function initMsgPop()
 	MsgPop.showMoreMessages = function(){
 		var currentMsg;
 		var count = 0;
-		var msgID;
 		var obj;
 
 		$('.msgPopError:hidden, .msgPopMessage:hidden, .msgPopWarning:hidden, .msgPopSuccess:hidden').each(function (data) {
 			if (count < MsgPop.limit) {
 				currentMsg = $(this);
-				msgID = currentMsg.attr("id");
+				var msgID = currentMsg.attr("id");
 				obj = MsgPop[msgID];
+				
+				if (obj.AutoClose) {
+					obj.AutoCloseID = setTimeout(function () {
+						MsgPop.close(msgID,false);
+					}, obj.CloseTimer);
+				}
 				
 				if(typeof(obj)!="undefined" && currentMsg.length != 0){
 					if (jQuery.isFunction(obj["BeforeOpen"])) 
 					{
 						obj.BeforeOpen();
 					}
-					
+										
 					currentMsg.slideDown(MsgPop.effectSpeed, function () {
 						if (jQuery.isFunction(obj["AfterOpen"])) 
 						{
 							obj.AfterOpen();
 						}
-						
+
 						MsgPop[msgID].AfterOpen();
 					});
 				}
@@ -285,37 +283,43 @@ function initMsgPop()
 	}
 	
 	//This will close messages one at a time and run any user defined functions
-	MsgPop.closeAll = function () {
-		var id;
-		$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
-			id = $(this).attr("id");
-			MsgPop.close(id, true);
-		});
-	}
+	MsgPop.closeAll = function (settings) {
+		var defaultObject = {
+			Animate: false,				// Closes each message and animates the close.
+		};
+		obj = $.extend(mergedObj = {}, defaultObject, settings);	//overwrites any missing values with defaults
 	
-	//This will preserve any global settings, not run user defined functions, and completely reset MsgPop object
-	MsgPop.reset = function()
-	{
-		for (var property in MsgPop) {
-			if (MsgPop.hasOwnProperty(property)) {
-				clearTimeout(MsgPop[property].AutoCloseID);
-			}
+		if(obj.Animate)
+		{
+			var id;
+			$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
+				id = $(this).attr("id");
+				MsgPop.close(id, true);
+			});
 		}
-		
-		UserSettings = {};
-		UserSettings.effectSpeed = MsgPop.effectSpeed;
-		UserSettings.limit = MsgPop.limit;
-		UserSettings.displaySmall = MsgPop.displaySmall;
-		UserSettings.position = MsgPop.position
-		
-		initMsgPop();
-		
-		MsgPop.effectSpeed = UserSettings.effectSpeed;
-		MsgPop.limit = UserSettings.limit;
-		MsgPop.displaySmall = UserSettings.displaySmall;
-		MsgPop.position = UserSettings.position;
+		else
+		{
+			for (var property in MsgPop) {
+				if (MsgPop.hasOwnProperty(property)) {
+					clearTimeout(MsgPop[property].AutoCloseID);
+				}
+			}
+			
+			UserSettings = {};
+			UserSettings.effectSpeed = MsgPop.effectSpeed;
+			UserSettings.limit = MsgPop.limit;
+			UserSettings.displaySmall = MsgPop.displaySmall;
+			UserSettings.position = MsgPop.position
+			
+			initMsgPop();
+			
+			MsgPop.effectSpeed = UserSettings.effectSpeed;
+			MsgPop.limit = UserSettings.limit;
+			MsgPop.displaySmall = UserSettings.displaySmall;
+			MsgPop.position = UserSettings.position;
 
-		$(document.getElementById('msgPopContainer')).remove();
+			$(document.getElementById('msgPopContainer')).remove();		
+		}
 	}
 	
 	MsgPop.cleanUp = function(isCloseAll) {
@@ -344,17 +348,6 @@ function initMsgPop()
 				closeAllBtn.slideUp(MsgPop.effectSpeed);
 			}
 	        
-	    }
-	    else if (MsgPop.count == MsgPop.limit) {
-			var moreBtn = $(document.getElementById("msgDivMore"));
-			
-			if(isCloseAll)
-			{
-				moreBtn.hide();
-			}
-			else{
-				moreBtn.slideUp(MsgPop.effectSpeed);
-			}
 	    }
 	}
 
