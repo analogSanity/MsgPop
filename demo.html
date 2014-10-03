@@ -5,7 +5,7 @@
 	<meta charset="utf-8"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/msgPop.css" />
-	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
 	<title>Message Pop Demo</title>
 </head>
@@ -13,35 +13,27 @@
 <body style="background-color:ddd;">
 	<script language="javascript" type="text/javascript">
 		MsgPop.displaySmall = true;
+		MsgPop.position = "top-right";
 		
 		$(document).ready(function(){
 			MsgPop.open({
-				Type:			"success",
-				Content:		"Welcome to msgPop!",
-				AutoClose:		true,
-			});
+			Type:			"success",
+			Content:		"Welcome to MsgPop!"});
 		});
 	
 		function showMessages(){	
-			MsgPop.reset();
-
+			MsgPop.closeAll();
+			
 			MsgPop.open({
 			Type:			"success",
-			Content:		"Yeah Success",
-			AutoClose:		false,
-			CloseTimer:		100000,
-			ClickAnyClose:	true,
-			ShowIcon:		true,
-			HideCloseBtn:	false});
+			Content:		"This has been a success!",
+			AutoClose:		false});
 			
 			MsgPop.open({
 			Type:			"error",
 			Content:		"Fail! You have to click the close button.",
 			AutoClose:		false,
-			CloseTimer:		100000,
-			ClickAnyClose:	false,
-			ShowIcon:		true,
-			HideCloseBtn:	false});
+			ClickAnyClose:	false});
 			
 			MsgPop.open({
 			Type:			"message",
@@ -49,7 +41,6 @@
 			AutoClose:		true,
 			CloseTimer:		10000,
 			ClickAnyClose:	false,
-			ShowIcon:		true,
 			HideCloseBtn:	true});
 			
 			MsgPop.open({
@@ -63,7 +54,49 @@
 			MsgPop.open({
 			Type:			"success",
 			Content:		"I was hiding...",
+			BeforeClose:	function(){
+								//alert("I am about to close!");
+							},
+			AfterClose:		function(){
+								//alert("I have closed :(");
+							},
 			AutoClose:		false});
+
+			MsgPop.open({
+			Type:			"error",
+			Content:		"This message will self destruct in 5 seconds!",
+			AutoClose:		true,
+			CloseTimer:		5000,
+			ClickAnyClose:	false,
+			HideCloseBtn:	true});
+
+			
+			MsgPop.open({
+			Type:			"message",
+			Content:		"I have given this message a unique dom ID",
+			AutoClose:		false,
+			MsgID:			"info",
+			ClickAnyClose:	true});
+			
+			MsgPop.close("info");
+			MsgPop.close("info");
+			
+			
+						MsgPop.open({
+			Type:			"warning",
+			Content:		"This is a warning. Click anywhere to close me!",
+			AutoClose:		false,
+			ClickAnyClose:	true,
+			ShowIcon:		true,
+			HideCloseBtn:	true});
+			
+						MsgPop.open({
+			Type:			"warning",
+			Content:		"This is a warning. Click anywhere to close me!",
+			AutoClose:		false,
+			ClickAnyClose:	true,
+			ShowIcon:		true,
+			HideCloseBtn:	true});
 	
 		}
 
