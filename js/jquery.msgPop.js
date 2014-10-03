@@ -1,5 +1,5 @@
 /*!
- *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
+ *  MsgPop by Anthony J. Laurene - 10/1/2014
  *  License - (JS: MIT License, CSS: MIT License)
  */
 var MsgPop = initMsgPop();
@@ -7,19 +7,24 @@ var MsgPop = initMsgPop();
 function initMsgPop()
 {
 	MsgPop = {};
+
 	MsgPop.effectSpeed = 250;
 	MsgPop.limit = 4;
 	MsgPop.count = 0;
 	MsgPop.displaySmall = false;
 	MsgPop.position = "top-right";
+	MsgPop.containerCreated = false;
+	MsgPop.closeAllBtnCreated = false;
+	MsgPop.loadMoreBtnCreated = false;
 	jQuery.fx.interval = 1;
-	
-	MsgPop.open = function (obj) {
-	    MsgPop.count += 1;
 
-		//Create Message Container
-		msgPopContainer = document.getElementById("msgPopContainer");
-		if (msgPopContainer == null) {
+	
+	MsgPop.createContainer = function() {
+		var msgPopContainer;
+
+		if(MsgPop.containerCreated == false)
+		{
+			MsgPop.containerCreated = true;
 			var container = document.createElement("div");
 			container.setAttribute('id', 'msgPopContainer');
 			if(MsgPop.displaySmall)
@@ -27,12 +32,12 @@ function initMsgPop()
 				container.setAttribute('class', 'msgPopContainerSmall');
 			}
 			document.body.appendChild(container);
-			msgPopContainer = document.getElementById("msgPopContainer");
 		}
-		else{
-			$(msgPopContainer).clearQueue();
-			$(msgPopContainer).stop();
-		}
+
+		msgPopContainer = document.getElementById("msgPopContainer");
+		
+		$(msgPopContainer).stop().clearQueue();
+		
 		if(MsgPop.displaySmall)
 		{
 			$(msgPopContainer).addClass("msgPop-"+MsgPop.position);
@@ -40,11 +45,46 @@ function initMsgPop()
 		else{
 			$(msgPopContainer).addClass("msgPop-top-right");
 		}
+
+		return msgPopContainer;
+	}
+	
+	MsgPop.createCloseAll = function(container){
+		if (MsgPop.closeAllBtnCreated == false) {
+			MsgPop.closeAllBtnCreated = true;
+			
+			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
+			$(container).append(msgDivCloseAll);
+		}
 		
-		//Set ID
+		return $(document.getElementById('msgPopCloseAllBtn'));
+	}
+	
+	MsgPop.createLoadMore = function(container){
+		if(MsgPop.loadMoreBtnCreated == false){
+			MsgPop.loadMoreBtnCreated = true;
+			
+			var msgMoreBtn = '<div id="msgDivMore" class="msgPopLoadMore">';
+			msgMoreBtn += '<span onclick="javascript:MsgPop.showMoreMessages();">=== Load More Messages ===</span>';
+			msgMoreBtn += '</div>';
+			
+			$(container).append(msgMoreBtn);
+		}
+		
+		return $(document.getElementById('msgDivMore'));
+	}
+	
+	MsgPop.open = function (obj) {
+		if(typeof(MsgPop[obj.MsgID]) != "undefined"){
+			return obj.MsgID;
+		}
+
+		//Create Container
+		var container = MsgPop.createContainer();
+				
+		MsgPop.count += 1;
 		var msgPopMessageID = 'msgPop' + MsgPop.count;
-		var showMsg = (MsgPop.count <= MsgPop.limit) ? true : false;
-		
+
 		//Merge Objects
 		var defaultObject = {
 			Type: "message",				// (message : success : error)
@@ -57,38 +97,39 @@ function initMsgPop()
 			BeforeClose: null, 				// Fires when the message begins to close
 			AfterClose: null, 				// Fires when the message has closed
 			ShowIcon: true,					// Show / Hide icon next to message 
-			msgID: msgPopMessageID,	  		// Sets message ID for this specific call
-			cssClass: ""					// Adds additional css classes to the message
+			MsgID: msgPopMessageID,	  		// Sets message ID for this specific call
+			CssClass: ""					// Adds additional css classes to the message
 		}
-		
-		obj = $.extend(mergedObj = {}, defaultObject, obj);	//overwrites any missing values with defaults
-		MsgPop[obj.msgID] = obj; //creates a property on msgPop object that stores the current object.
 
-		//Call Before Open
-		obj.BeforeOpen();
-				
+		obj = $.extend(mergedObj = {}, defaultObject, obj);	//overwrites any missing values with defaults
+		obj = $.extend(mergedObj = {}, {MarkedForDelete:false}, obj);
+		MsgPop[obj.MsgID] = obj; //creates a property on msgPop object that stores the current object.
+
+		var showMsg = (MsgPop.count <= MsgPop.limit) ? true : false;
+		
+		//Create Message
 		var msg = $(document.createElement("div"));
-		msg.attr("role","alert").attr("id",obj.msgID);
+		msg.attr("role","alert").attr("id",obj.MsgID);
 			
 		switch (obj.Type) {
 			case "success":
-				msg.attr('class', 'msgPopSuccess ' + obj.cssClass);
+				msg.attr('class', 'msgPopSuccess ' + obj.CssClass);
 				msgIcon = '<i class="fa fa-check-circle"></i>';
 				break;
 			case "error":
-				msg.attr('class', 'msgPopError ' + obj.cssClass);
+				msg.attr('class', 'msgPopError ' + obj.CssClass);
 				msgIcon = '<i class="fa fa-ban"></i>';
 				break;
 			case "warning":
-				msg.attr('class', 'msgPopWarning ' + obj.cssClass);		
+				msg.attr('class', 'msgPopWarning ' + obj.CssClass);		
 				msgIcon = '<i class="fa fa-exclamation-triangle"></i>';
 				break;
 			case "message":
-				msg.attr('class', 'msgPopMessage ' + obj.cssClass);				
+				msg.attr('class', 'msgPopMessage ' + obj.CssClass);				
 				msgIcon = '<i class="fa fa-info-circle"></i>';
 				break;
 			default:
-				msg.attr('class', 'msgPopWarning ' + obj.cssClass);	
+				msg.attr('class', 'msgPopWarning ' + obj.CssClass);	
 				msgIcon = '<i class="fa fa-info-circle"></i>';
 		}
 		
@@ -102,7 +143,7 @@ function initMsgPop()
 		}
 		msgDivContent += '<div class="msgPopTable-cell">' + obj.Content + '</div>';
 		msgDivContent += '</div></div>';
-		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+obj.msgID+'CloseBtn"></div>';
+		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+obj.MsgID+'CloseBtn"></div>';
 		msgDivContent += '</div></div></div>';
 		
 		msg.html(msgDivContent);
@@ -118,171 +159,204 @@ function initMsgPop()
 			
 			if(obj.ClickAnyClose == false)
 			{
-				closeBtn.attr('onclick',"MsgPop.close('"+obj.msgID+"')");
+				closeBtn.attr('onclick',"MsgPop.close('"+obj.MsgID+"')");
 			}
 		}
 
 		if(obj.ClickAnyClose)
 		{
-			msg.attr('onclick',"MsgPop.close('"+obj.msgID+"')");
+			msg.attr('onclick',"MsgPop.close('"+obj.MsgID+"')");
 		}
 		
-		$(msg).find("#"+obj.msgID+"CloseBtn").append(closeBtn);
+		$(msg).find("#"+obj.MsgID+"CloseBtn").append(closeBtn);
+
+
+		var loadMoreBtn = MsgPop.createLoadMore(container);
+		var closeAllBtn = MsgPop.createCloseAll(container);
 		
-		
-		var msgDivCloseAllChk = document.getElementById('msgPopCloseAllBtn');
-		if (msgDivCloseAllChk == null) {
-			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
-			$(msgPopContainer).append(msgDivCloseAll);
-			msgDivCloseAllChk = document.getElementById('msgPopCloseAllBtn');
-		}
-		
-		if(MsgPop.count > 1)
+		//Attach Message
+		loadMoreBtn.before(msg);
+
+		if(showMsg)
 		{
-			$(msgDivCloseAllChk).show();
+			//Call Before Open
+			obj.BeforeOpen();
+
+			$(document.getElementById(obj.MsgID)).slideDown(MsgPop.effectSpeed, function () {
+				obj.AfterOpen();
+			});
+			
+			if (obj.AutoClose) {
+				obj.AutoCloseID = setTimeout(function () {
+					MsgPop.close(obj.MsgID,false);
+				}, obj.CloseTimer);
+			}
 		}
 		else{
-			$(msgDivCloseAllChk).hide();
+			$(document.getElementById('msgDivMore')).slideDown(MsgPop.effectSpeed);
 		}
-		
-		if (showMsg) {
-			var currentMsg = $(document.getElementById(obj.msgID)).remove();
-			
-			$.when($(msgDivCloseAllChk).before(msg)).done(function () {
-				//Open Alert
-				currentMsg = $(document.getElementById(obj.msgID));
-				currentMsg.slideDown(MsgPop.effectSpeed, function () {
-					obj.AfterOpen();
-				});
 				
-				if (obj.AutoClose) {
-					obj.AutoCloseID = setTimeout(function () {
-					    MsgPop.close(obj.msgID);
-					}, obj.CloseTimer);
-				}
-			});
+		if(MsgPop.count > 1){
+			closeAllBtn.show();
 		}
-		else {
-
-			var msgDivMoreCheck = document.getElementById("msgDivMore");
-			if (msgDivMoreCheck == null) {
-				var msgDivMore = '<div id="msgDivMore" class="msgPopLoadMore">';
-				msgDivMore += '<span onclick="javascript:MsgPop.showMoreMessages();">=== Load More Messages ===</span>';
-				msgDivMore += '</div>';
-
-				$.when($(msgDivCloseAllChk).before(msgDivMore)).done(function () {
-				    var moreMsg = $(document.getElementById("msgDivMore"));
-				    moreMsg.before(msg);
-					moreMsg.slideDown(MsgPop.effectSpeed);
-				});
-			}
-			else {
-				$(msgDivMoreCheck).before(msg);
-			}
+		else{
+			closeAllBtn.hide();
 		}
-		
-		return obj.msgID;
+
+		return obj.MsgID;
 	};
 
 	MsgPop.close = function (msgID, isCloseAll) {
-		var message = document.getElementById(msgID);
 		var obj = MsgPop[msgID];
-		var allMessages;
-		var isRegularClose = (isCloseAll) ? false : true;
-
-		if (message != null && typeof (obj) != "undefined") {
-		    MsgPop.count = (MsgPop.count <= 0) ? 0 : MsgPop.count - 1;
-			message = $(message);
-			if (jQuery.isFunction(obj["BeforeClose"])) {
-				$.when(obj.BeforeClose()).done(function () {
-					message.slideUp(MsgPop.effectSpeed, function () {
-						message.remove();
-						if (jQuery.isFunction(obj["AfterClose"])) {
-							obj.AfterClose();
-						}
-						if(isRegularClose)
-						{
-							allMessages = $('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess');
-							if (allMessages.filter(":visible").length == 0 || allMessages.length == 1 || allMessages.length == MsgPop.limit) {
-								MsgPop.showMoreMessages();
-							}
-						}
-					});
-				});
-			}
-			else {
-				message.slideUp(MsgPop.effectSpeed, function () {
+		
+		if (typeof(obj) != "undefined" && obj.MarkedForDelete == false) 
+		{
+			obj.MarkedForDelete = true;
+			MsgPop[msgID] = obj;
+						
+			var allMessages;
+			var isRegularClose = (isCloseAll) ? false : true;
+			var message = $(document.getElementById(msgID));
+			
+			if(message.length != 0)
+			{
+				if (jQuery.isFunction(obj["BeforeClose"])) 
+				{
+					obj.BeforeClose()
+				}
+			
+				message.stop(true,true).clearQueue().slideUp(MsgPop.effectSpeed, function () {
 					message.remove();
+					
 					if (jQuery.isFunction(obj["AfterClose"])) {
 						obj.AfterClose();
 					}
-					if(isRegularClose)
+					
+					if(isRegularClose && MsgPop.count >= MsgPop.limit)
 					{
-						allMessages = $('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess');
-						if (allMessages.filter(":visible").length == 0 || allMessages.length == 1 || allMessages.length == MsgPop.limit) {
-							MsgPop.showMoreMessages();
-						}
+						MsgPop.showMoreMessages();
 					}
 				});
+				
+				clearTimeout(obj.AutoCloseID);
+				delete obj;	
 			}
+			
+			MsgPop.count -= 1;
+			MsgPop.cleanUp(isCloseAll);	
 		}
-		
-		MsgPop.cleanUp(obj);
-		
 	};
 
-	MsgPop.cleanUp = function(obj) {
-	    if (MsgPop.count == 0)
-	    {
-	        $(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed, function(){ $(this).remove()});
-	    }
-	    else if (MsgPop.count == 1) {
-	        $(document.getElementById("msgPopCloseAllBtn")).remove();
-	    }
-	    else if (MsgPop.count == MsgPop.limit) {
-	        $(document.getElementById("msgDivMore")).remove();
-	    }
-	    if (typeof (obj) != "undefined")
-	    {
-            clearTimeout(obj.AutoCloseID);
-	    }
-		delete obj;
-	}
-
-	MsgPop.closeAll = function () {
-	    var id;
-	    $(document.getElementById("msgPopContainer")).slideUp(MsgPop.effectSpeed);
-	    $('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
-	        $(msgPopContainer).removeAttr("style");
-	        id = $(this).attr("id");
-	        MsgPop.close(id, true);
-	    });
-	}
-
-	MsgPop.showMoreMessages = function()
-	{
+	MsgPop.showMoreMessages = function(){
 		var currentMsg;
 		var count = 0;
 		var msgID;
+		var obj;
 
 		$('.msgPopError:hidden, .msgPopMessage:hidden, .msgPopWarning:hidden, .msgPopSuccess:hidden').each(function (data) {
-			currentMsg = $(this);
 			if (count < MsgPop.limit) {
-				currentMsg.slideDown(MsgPop.effectSpeed, function () {
-					msgID = currentMsg.attr("id");
-					MsgPop[msgID].AfterOpen();
-				});
+				currentMsg = $(this);
+				msgID = currentMsg.attr("id");
+				obj = MsgPop[msgID];
+				
+				if(typeof(obj)!="undefined" && currentMsg.length != 0){
+					if (jQuery.isFunction(obj["BeforeOpen"])) 
+					{
+						obj.BeforeOpen();
+					}
+					
+					currentMsg.slideDown(MsgPop.effectSpeed, function () {
+						if (jQuery.isFunction(obj["AfterOpen"])) 
+						{
+							obj.AfterOpen();
+						}
+						
+						MsgPop[msgID].AfterOpen();
+					});
+				}
 			}
+
 			count += 1;
 		});
 
 		if ($('.msgPopError:hidden, .msgPopMessage:hidden, .msgPopWarning:hidden, .msgPopSuccess:hidden').length == 0) {
-			var msgDivMore = $(document.getElementById("msgDivMore"));
-			msgDivMore.slideUp(MsgPop.effectSpeed, function () {
-				msgDivMore.remove();
-			});
+			$(document.getElementById("msgDivMore")).clearQueue().stop().slideUp(MsgPop.effectSpeed);
 		}
 	}
 	
+	//This will close messages one at a time and run any user defined functions
+	MsgPop.closeAll = function () {
+		var id;
+		$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
+			id = $(this).attr("id");
+			MsgPop.close(id, true);
+		});
+	}
+	
+	//This will preserve any global settings, not run user defined functions, and completely reset MsgPop object
+	MsgPop.reset = function()
+	{
+		for (var property in MsgPop) {
+			if (MsgPop.hasOwnProperty(property)) {
+				clearTimeout(MsgPop[property].AutoCloseID);
+			}
+		}
+		
+		UserSettings = {};
+		UserSettings.effectSpeed = MsgPop.effectSpeed;
+		UserSettings.limit = MsgPop.limit;
+		UserSettings.displaySmall = MsgPop.displaySmall;
+		UserSettings.position = MsgPop.position
+		
+		initMsgPop();
+		
+		MsgPop.effectSpeed = UserSettings.effectSpeed;
+		MsgPop.limit = UserSettings.limit;
+		MsgPop.displaySmall = UserSettings.displaySmall;
+		MsgPop.position = UserSettings.position;
+
+		$(document.getElementById('msgPopContainer')).remove();
+	}
+	
+	MsgPop.cleanUp = function(isCloseAll) {
+	    if (MsgPop.count == 0)
+	    {
+			MsgPop.closeAllBtnCreated = false;
+			MsgPop.loadMoreBtnCreated = false;
+			//$(document.getElementById('msgPopContainer')).remove();
+			
+			$(document.getElementById('msgPopContainer')).stop(true,true).slideUp(MsgPop.effectSpeed, function(){
+				$(this).remove();
+				MsgPop.containerCreated = false;
+			});
+			$(document.getElementById("msgPopCloseAllBtn")).remove();
+			$(document.getElementById("msgDivMore")).remove();
+	    }
+	    else if (MsgPop.count == 1) {
+			var closeAllBtn = $(document.getElementById("msgPopCloseAllBtn"));
+			
+			if(isCloseAll)
+			{
+				closeAllBtn.hide();
+			}
+			else
+			{
+				closeAllBtn.slideUp(MsgPop.effectSpeed);
+			}
+	        
+	    }
+	    else if (MsgPop.count == MsgPop.limit) {
+			var moreBtn = $(document.getElementById("msgDivMore"));
+			
+			if(isCloseAll)
+			{
+				moreBtn.hide();
+			}
+			else{
+				moreBtn.slideUp(MsgPop.effectSpeed);
+			}
+	    }
+	}
+
 	return MsgPop;
 }
