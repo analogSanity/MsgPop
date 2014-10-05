@@ -11,12 +11,13 @@ function initMsgPop()
 	MsgPop.effectSpeed = 250;
 	MsgPop.limit = 4;
 	MsgPop.count = 0;
+	MsgPop.actionID = 0;
 	MsgPop.displaySmall = false;
 	MsgPop.position = "top-right";
 	MsgPop.containerCreated = false;
 	MsgPop.closeAllBtnCreated = false;
 	MsgPop.loadMoreBtnCreated = false;
-	
+
 	MsgPop.createContainer = function() {
 		var msgPopContainer;
 
@@ -38,10 +39,10 @@ function initMsgPop()
 
 		if(MsgPop.displaySmall)
 		{
-			$(msgPopContainer).addClass("msgPop-"+MsgPop.position);
+			$(msgPopContainer).addClass("msgPop-"+MsgPop.position).addClass("msgPopContainerOverflow");
 		}
 		else{
-			$(msgPopContainer).addClass("msgPop-top-right");
+			$(msgPopContainer).addClass("msgPop-top-right").removeClass("msgPopContainerOverflow");
 		}
 
 		return msgPopContainer;
@@ -51,7 +52,7 @@ function initMsgPop()
 		if (MsgPop.closeAllBtnCreated == false) {
 			MsgPop.closeAllBtnCreated = true;
 			
-			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll({Animate:true})">Close All Messages</div>';
+			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
 			$(container).append(msgDivCloseAll);
 		}
 		
@@ -81,7 +82,8 @@ function initMsgPop()
 		var container = MsgPop.createContainer();
 				
 		MsgPop.count += 1;
-		var msgPopMessageID = 'msgPop' + MsgPop.count;
+		MsgPop.actionID += 1;
+		var msgPopMessageID = 'msgPop' + MsgPop.actionID;
 
 		//Merge Objects
 		var defaultObject = {
@@ -285,31 +287,23 @@ function initMsgPop()
 	//This will close messages one at a time and run any user defined functions
 	MsgPop.closeAll = function (settings) {
 		var defaultObject = {
-			Animate: false,				// Closes each message and animates the close.
+			ClearEvents: 	false		// Closes each message and animates the close.
 		};
 		obj = $.extend(mergedObj = {}, defaultObject, settings);	//overwrites any missing values with defaults
-	
-		if(obj.Animate)
-		{
-			var id;
-			$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
-				id = $(this).attr("id");
-				MsgPop.close(id, true);
-			});
-		}
-		else
-		{
-			for (var property in MsgPop) {
-				if (MsgPop.hasOwnProperty(property)) {
-					clearTimeout(MsgPop[property].AutoCloseID);
-				}
+				
+		for (var property in MsgPop) {
+			if (MsgPop.hasOwnProperty(property)) {
+				clearTimeout(MsgPop[property].AutoCloseID);
 			}
-			
+		}		
+				
+		if(obj.ClearEvents)
+		{
 			UserSettings = {};
 			UserSettings.effectSpeed = MsgPop.effectSpeed;
 			UserSettings.limit = MsgPop.limit;
 			UserSettings.displaySmall = MsgPop.displaySmall;
-			UserSettings.position = MsgPop.position
+			UserSettings.position = MsgPop.position;
 			
 			initMsgPop();
 			
@@ -318,8 +312,24 @@ function initMsgPop()
 			MsgPop.displaySmall = UserSettings.displaySmall;
 			MsgPop.position = UserSettings.position;
 
-			$(document.getElementById('msgPopContainer')).remove();		
+			$(document.getElementById('msgPopContainer')).remove();	
 		}
+		else
+		{
+			var id;
+			$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
+				id = $(this).attr("id");
+				MsgPop.close(id, true);
+			});	
+		}
+	}
+	
+	MsgPop.destroy = function()
+	{	
+		delete(MsgPop);
+		$(document.getElementById('msgPopContainer')).remove();	
+		
+		initMsgPop();
 	}
 	
 	MsgPop.cleanUp = function(isCloseAll) {
@@ -327,8 +337,7 @@ function initMsgPop()
 	    {
 			MsgPop.closeAllBtnCreated = false;
 			MsgPop.loadMoreBtnCreated = false;
-			//$(document.getElementById('msgPopContainer')).remove();
-			
+
 			$(document.getElementById('msgPopContainer')).stop(true,true).slideUp(MsgPop.effectSpeed, function(){
 				$(this).remove();
 				MsgPop.containerCreated = false;

@@ -3,112 +3,325 @@
 
 <head>
 	<meta charset="utf-8"/>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/msgPop.css" />
+	<link rel="stylesheet" href="css/site.css" />
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
+	<script language="javascript" type="text/javascript" src="js/site.js"></script>
 	<title>Message Pop Demo</title>
+	
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
 </head>
 
-<body style="background-color:ddd;">
-	<script language="javascript" type="text/javascript">
-		MsgPop.displaySmall = true;
-		MsgPop.position = "top-right";
-		
-		$(document).ready(function(){
-			MsgPop.open({
-			Type:			"success",
-			Content:		"Welcome to MsgPop!"});
-		});
+<script language="javascript" type="text/javascript">
+	var intervalID = 0;
+	var time = 10;
 	
-		function showMessages(){	
-			MsgPop.closeAll();
-			
-			MsgPop.open({
-			Type:			"success",
-			Content:		"This has been a success!",
-			AutoClose:		false});
-			
-			MsgPop.open({
-			Type:			"error",
-			Content:		"Fail! You have to click the close button.",
-			AutoClose:		false,
-			ClickAnyClose:	false});
-			
-			MsgPop.open({
-			Type:			"message",
-			Content:		"This message was created using msgPop! It will close in 10 seconds!",
-			AutoClose:		true,
-			CloseTimer:		10000,
-			ClickAnyClose:	false,
-			HideCloseBtn:	true});
-			
-			MsgPop.open({
-			Type:			"warning",
-			Content:		"This is a warning. Click anywhere to close me!",
-			AutoClose:		false,
-			ClickAnyClose:	true,
-			ShowIcon:		true,
-			HideCloseBtn:	true});
-			
-			MsgPop.open({
-			Type:			"success",
-			Content:		"I was hiding...",
-			BeforeClose:	function(){
-								//alert("I am about to close!");
-							},
-			AfterClose:		function(){
-								//alert("I have closed :(");
-							},
-			AutoClose:		false});
-
-			MsgPop.open({
-			Type:			"error",
-			Content:		"This message will self destruct in 5 seconds!",
-			AutoClose:		true,
-			CloseTimer:		5000,
-			ClickAnyClose:	false,
-			HideCloseBtn:	true});
-
-			
-			MsgPop.open({
-			Type:			"message",
-			Content:		"I have given this message a unique dom ID",
-			AutoClose:		false,
-			MsgID:			"info",
-			ClickAnyClose:	true});
-			
-			MsgPop.close("info");
-			MsgPop.close("info");
-			
-			
-						MsgPop.open({
-			Type:			"warning",
-			Content:		"This is a warning. Click anywhere to close me!",
-			AutoClose:		false,
-			ClickAnyClose:	true,
-			ShowIcon:		true,
-			HideCloseBtn:	true});
-			
-						MsgPop.open({
-			Type:			"warning",
-			Content:		"This is a warning. Click anywhere to close me!",
-			AutoClose:		false,
-			ClickAnyClose:	true,
-			ShowIcon:		true,
-			HideCloseBtn:	true});
+	MsgPop.displaySmall = true;
+	MsgPop.position = "top-right";
 	
-		}
+	$(document).ready(function(){
+		MsgPop.open({
+		Type:			"success",
+		Content:		"Welcome to MsgPop!"});
+	});
 
-	</script>
-<div style="background-color:#fff;">
-	<div style="width:960px; margin:auto;">
-		<h1>MsgPop!</h1>
+	function showMessages(){	
+		MsgPop.closeAll({ClearEvents:	true});
 		
-		<p>
-			Message pop is a free plug-in that leverages jQuery and FontAwesome to create a simple to use and clean messaging system.
-		</p>
+		MsgPop.open({
+		Type:			"success",
+		Content:		"This has been a success!",
+		AutoClose:		false});
 		
-		<button type="button" onclick="showMessages()">Load Messages</button>
+		MsgPop.open({
+		Type:			"error",
+		Content:		"Fail! You have to click the close button.",
+		AutoClose:		false,
+		ClickAnyClose:	false});
+		
+		MsgPop.open({
+		Type:			"message",
+		Content:		'This message was created using msgPop! It will close in <span id="time">10</span> seconds!',
+		AutoClose:		true,
+		BeforeOpen:		function(){
+							time = 10;
+							if(intervalID == 0){
+								intervalID = setInterval(function(){
+									time-=1;
+									$(document.getElementById('time')).html(time);
+									console.log(time);
+								},1000);
+							}	
+						},
+		BeforeClose:	function(){		
+							time = 10;
+							clearInterval(intervalID);
+							intervalID = 0;
+						},
+		CloseTimer:		10000,
+		ClickAnyClose:	false,
+		HideCloseBtn:	true});
+		
+		MsgPop.open({
+		Type:			"warning",
+		Content:		"This is a warning. Click anywhere to close me!",
+		AutoClose:		false,
+		ClickAnyClose:	true,
+		ShowIcon:		true,
+		HideCloseBtn:	true});
+		
+		MsgPop.open({
+		Type:			"success",
+		Content:		"I was hiding...If you close me you will see an example of my hooks.",
+		AutoClose:		false});
+
+		MsgPop.open({
+		Type:			"error",
+		Content:		"This message will self destruct in 5 seconds!",
+		AutoClose:		true,
+		CloseTimer:		5000,
+		ClickAnyClose:	false,
+		HideCloseBtn:	true});
+
+		
+		MsgPop.open({
+		Type:			"message",
+		Content:		"I have given this message a unique dom ID",
+		AutoClose:		false,
+		MsgID:			"info",
+		ClickAnyClose:	true});
+	}
+
+</script>
+
+<body>
+	<div id="banner">
+		<div id="banner-content">
+			<img src="images/tony.jpg" > 
+			<p style="float:left; margin-left:5px;">
+			Tony Laurene
+			</p>
+		</div>
+	</div>
+
+	<div id="master">
+		<div id="content">
+			<h1>Message Pop!</h1>
+			
+			<p>
+				Message pop is a free plug-in that leverages jQuery and FontAwesome to create a simple to use and clean messaging system.
+			</p>
+			
+			<button type="button" onclick="showMessages()">Run Demo</button>
+			
+			<p>
+				Released under the MIT License. Source on Github (changelog).
+				Compatible with: FontAwesome 4.2.0+, jQuery 1.6.0+ in Firefox, Safari, Chrome, Opera, Internet Explorer 8+
+			</p>
+			
+			
+			<h2>Usage</h2>
+			
+			Open a simple message
+			<pre onclick="demo1()">
+				<span class="green">// Examples:
+				// Display a message for a successful transaction</span>
+				
+				MsgPop.closeAll();
+				MsgPop.open({
+					<span class="tab"></span>Type:<span class="gray">"success"</span>,
+					<span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span>
+				});
+			</pre>
+			
+			Playing with switches
+			<pre onclick="demo2()">
+				<span class="green">// Examples:
+				// Display a message for a successful transaction</span>
+				
+				MsgPop.closeAll();
+				MsgPop.open({
+					<span class="tab"></span>Type:<span class="gray">"message"</span>,
+					<span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span>
+					<span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,
+					<span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span>
+				});
+			</pre>
+			
+			Setting global switches and hooks
+			<pre onclick="demo3()">
+				<span class="green">// Examples:
+				// Display a message accross the top of the screen</span>
+				
+				MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span>
+				MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span>
+				
+				MsgPop.open({
+					<span class="tab"></span>Type:<span class="gray">"error"</span>,
+					<span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span>
+					<span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){
+					<span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = true;
+					<span class="tab"></span>}
+				});
+			</pre>
+			
+			<h2>Global Settings</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>displaySmall</td>
+					<td class="italic">True</td>
+					<td>
+						This global setting will toggle full screen 
+						messages or small.
+					</td>
+				</tr>
+				<tr>
+					<td>effectSpeed</td>
+					<td class="italic">250</td>
+					<td>
+						Number of milliseconds all animated effects take to complete.
+					</td>
+				</tr>
+				<tr>
+					<td>position</td>
+					<td class="italic">"top-right"</td>
+					<td>
+						Use this option in conjunction with "<b>displaySmall</b>."<br>
+						Valid options include the following.
+						<ul>
+							<li>"top-left"</li>
+							<li>"top-right"</li>
+							<li>"bottom-left"</li>
+							<li>"bottom-right"</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			
+			<h2>Message Settings</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>Type</td>
+					<td class="italic">"message"</td>
+					<td>
+						(message : success : error)
+					</td>
+				</tr>
+				<tr>
+					<td>Content</td>
+					<td class="italic">null</td>
+					<td>
+						Content you would like to load into the message. Accepts HTML.
+					</td>
+				</tr>
+				<tr>
+					<td>AutoClose</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) -- false: user will have to click either the 
+						message or close button in order to close the message.
+					</td>
+				</tr>
+				<tr>
+					<td>CloseTimer</td>
+					<td class="italic">7000</td>
+					<td>
+						Number of milliseconds before the message closes. This must be used in
+						conjunction with <b>AutoClose</b>.
+					</td>
+				</tr>
+				<tr>
+					<td>ClickAnyClose</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) When set to false the user will be forced to click the close
+						button in order to close the message.
+					</td>
+				</tr>
+				<tr>
+					<td>HideCloseBtn</td>
+					<td class="italic">false</td>
+					<td>
+						(true : false) show / hide close button
+					</td>
+				</tr>	
+				<tr>
+					<td>MsgID</td>
+					<td class="italic">Auto</td>
+					<td>
+						This will allow a user to set the "id" attribute of the message.
+						This is especially helpful when chaining events later that need
+						to access a paticular message.
+					</td>
+				</tr>
+				<tr>
+					<td>ShowIcon</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) Show / hide message icon left of the content
+					</td>
+				</tr>	
+				<tr>
+					<td>CssClass</td>
+					<td class="italic">null</td>
+					<td>
+						Allows the user to add additional classes to a message
+					</td>
+				</tr>				
+			</table>
+			
+			<h2>Callbacks</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>BeforeOpen</td>
+					<td class="italic">false</td>
+					<td>
+						Callback fires before message opens
+					</td>
+				</tr>
+				<tr>
+					<td>AfterOpen</td>
+					<td class="italic">false</td>
+					<td>
+						Callback fires after message opens
+					</td>
+				</tr>
+				<tr>
+					<td>BeforeClose</td>
+					<td class="italic">false</td>
+					<td>
+						Callback fires before message closes
+					</td>
+				</tr>
+				<tr>
+					<td>AfterClosed</td>
+					<td class="italic">false</td>
+					<td>
+						Callback fires after message closes
+					</td>
+				</tr>			
+			</table>
+		</div>
+	</div>
 </body>
 </html>
