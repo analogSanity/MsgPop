@@ -9,8 +9,6 @@ body
 h1
 {
 	font-size:2.5em;
-	padding:0;
-	margin:0;
 }
 button
 {
@@ -19,15 +17,17 @@ button
 	padding:10px;
 	color:#222;
 }
-pre
+.code
 {
 	background-color:#ddd;
 	color:#111;
 	cursor:pointer;
 	padding:10px;
 	border-radius:8px;
+	font-size:.8em;
+	font-family:"Courier New", Courier, monospace
 }
-pre:active
+.code:active
 {
 	background-color:#ccc;
 }
@@ -99,11 +99,10 @@ table tr td
 {
 	position:relative;
 	float:left;
-	top:-18px;
+	top:-42px;
 	z-index:2;
-	height:190%;
+	height:300%;
 	border-radius:50%;
-	border:1px solid #000;
 }
 
 #master, #content
@@ -116,6 +115,7 @@ table tr td
 	box-shadow:0 0 15px rgba(0,0,0,.3);
 	width:80%;
 	margin:0 auto;
+	margin-bottom:20px;
 }
 #content
 {
