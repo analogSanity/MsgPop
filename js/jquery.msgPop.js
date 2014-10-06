@@ -17,6 +17,15 @@ function initMsgPop()
 	MsgPop.containerCreated = false;
 	MsgPop.closeAllBtnCreated = false;
 	MsgPop.loadMoreBtnCreated = false;
+	
+	var deviceAgent = navigator.userAgent.toLowerCase();
+
+	if(deviceAgent.match(/(iphone|ipod|ipad)/) || deviceAgent.match(/(android)/)){
+		MsgPop.notMobile = false;
+	}
+	else{
+		MsgPop.notMobile = true;
+	}	
 
 	MsgPop.createContainer = function() {
 		var msgPopContainer;
@@ -26,7 +35,7 @@ function initMsgPop()
 			MsgPop.containerCreated = true;
 			var container = document.createElement("div");
 			container.setAttribute('id', 'msgPopContainer');
-			if(MsgPop.displaySmall)
+			if(MsgPop.displaySmall && MsgPop.notMobile)
 			{
 				container.setAttribute('class', 'msgPopContainerSmall');
 			}
@@ -37,7 +46,7 @@ function initMsgPop()
 		
 		$(msgPopContainer).stop().clearQueue();
 
-		if(MsgPop.displaySmall)
+		if(MsgPop.displaySmall && MsgPop.notMobile)
 		{
 			$(msgPopContainer).addClass("msgPop-"+MsgPop.position).addClass("msgPopContainerOverflow");
 		}
