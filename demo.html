@@ -3,13 +3,14 @@
 
 <head>
 	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/msgPop.css" />
 	<link rel="stylesheet" href="css/site.css" />
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
 	<script language="javascript" type="text/javascript" src="js/site.js"></script>
-	<title>Message Pop Demo</title>
+	<title>Sourceageddon</title>
 	
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
 </head>
@@ -99,9 +100,9 @@
 <body>
 	<div id="banner">
 		<div id="banner-content">
-			<img src="images/tony.jpg" > 
-			<p style="float:left; margin-left:5px; margin-top:-5px;">
-			Author:<br>
+			<img src="images/logo.png" > 
+			<p style="float:left; margin-left:5px;margin-top:-5px;">
+			By:<br>
 			Tony Laurene
 			</p>
 		</div>
@@ -115,6 +116,10 @@
 				Message pop is a free plug-in that leverages jQuery and FontAwesome to create a simple to use and clean messaging system.
 			</p>
 			
+			<h3 style="text-align:center; display:block;">
+				<a href="https://github.com/analogSanity/MsgPop/releases" target="_blank">Download v2.0 Now</a>
+			</h3>
+			
 			<button type="button" onclick="showMessages()">Run Demo</button>
 			
 			<p>
@@ -126,47 +131,47 @@
 			<h2>Usage</h2>
 			
 			Open a simple message
-			<pre onclick="demo1()">
-				<span class="green">// Examples:
-				// Display a message for a successful transaction</span>
-				
-				MsgPop.closeAll();
-				MsgPop.open({
-					<span class="tab"></span>Type:<span class="gray">"success"</span>,
-					<span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span>
-				});
-			</pre>
-			
+			<div class="code" onclick="demo1()">
+				<span class="green">// Examples:<br>
+				// Display a message for a successful transaction</span><br>
+				<br>
+				MsgPop.closeAll();<br>
+				MsgPop.open({<br>
+					<span class="tab"></span>Type:<span class="gray">"success"</span>,<br>
+					<span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span><br>
+				});<br>
+			</div>
+			<br><br>
 			Playing with switches
-			<pre onclick="demo2()">
-				<span class="green">// Examples:
-				// Display a message for a successful transaction</span>
-				
-				MsgPop.closeAll();
-				MsgPop.open({
-					<span class="tab"></span>Type:<span class="gray">"message"</span>,
-					<span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span>
-					<span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,
-					<span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span>
-				});
-			</pre>
-			
+			<div class="code" onclick="demo2()">
+				<span class="green">// Examples:<br>
+				// Display a message for a successful transaction</span><br>
+				<br>
+				MsgPop.closeAll();<br>
+				MsgPop.open({<br>
+					<span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
+					<span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span><br>
+					<span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,<br>
+					<span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span><br>
+				});<br>
+			</div>
+			<br><br>
 			Setting global switches and hooks
-			<pre onclick="demo3()">
-				<span class="green">// Examples:
-				// Display a message accross the top of the screen</span>
-				
-				MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span>
-				MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span>
-				
-				MsgPop.open({
-					<span class="tab"></span>Type:<span class="gray">"error"</span>,
-					<span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span>
-					<span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){
-					<span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = true;
-					<span class="tab"></span>}
-				});
-			</pre>
+			<div class="code" onclick="demo3()">
+				<span class="green">// Examples:<br>
+				// Display a message accross the top of the screen</span><br>
+				<br>
+				MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span><br>
+				MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span><br>
+				<br>
+				MsgPop.open({<br>
+					<span class="tab"></span>Type:<span class="gray">"error"</span>,<br>
+					<span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span><br>
+					<span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){<br>
+					<span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = true;<br>
+					<span class="tab"></span>}<br>
+				});<br>
+			</div>
 			
 			<h2>Global Settings</h2>
 			
