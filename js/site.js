@@ -6,6 +6,7 @@ function demo1()
 		Content:"Your transaction was a success!"
 	});
 }
+
 function demo2()
 {
 	MsgPop.closeAll();
@@ -16,6 +17,7 @@ function demo2()
 		ClickAnyClose:false
 	});
 }
+
 function demo3()
 {	
 	MsgPop.closeAll({ClearEvents:true});
@@ -27,6 +29,21 @@ function demo3()
 		AutoClose:false,
 		AfterClose: function(){
 			MsgPop.displaySmall = true;
+		}
+	});
+}
+function resetDemo()
+{
+	MsgPop.closeAll();
+	$("#liveDemo").html("When the button above is clicked this text will be replaced with HTML from liveDemo.json.");
+}
+function liveDemo()
+{
+	$.ajax({
+		dataType: "json",
+		url: "json/liveDemo.json",
+		success: function(data){
+			$("#liveDemo").html(data.content);
 		}
 	});
 }
