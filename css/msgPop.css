@@ -2,18 +2,21 @@
  *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
  *  License - (JS: MIT License, CSS: MIT License)
  */
+
 #msgPopContainer {
 	position:fixed;
 	z-index:999;
 	width:100%;
 }
 #msgPopContainer .fa{font-size:1.5em !important;}
+
 .msgPopContainerOverflow
 {
 	overflow:auto;
 	overflow-x:hidden;
 	height:100%;
 }
+
 #msgPopCloseAllBtn
 {
 	background-color:#000;
@@ -28,86 +31,101 @@
 	display:none;
 	box-shadow:0 0 5px rgba(0,0,0,.5);
 }
+
 #msgPopCloseAllBtn:active
 {
     color:#000;
     background:#fff;
 }
+
 .msgPopLoadMore
 {
 	background-color: rgba(2,2,2,.9);
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
+	color: #fff;
+	cursor: pointer;
+	text-align: center;
 }
+
 .msgPopLoadMore:active
 {
     background-color:#000;
 }
+
 .msgPopLoadMore span
 {
 	display:block;
 	width:100%;
 	padding:10px;
 }
+
 .msgPopSuccess, .msgPopWarning, .msgPopError, .msgPopMessage, .msgPopLoadMore{
 	border:1px solid #333;
 	display:none;
 	cursor: default;
 	box-shadow:0 0 5px rgba(0,0,0,.5);
 }
+
 .msgPopSuccess:active{
-	background: rgba(0,122,0,.95);
+	background: rgba(0,122,0,.92);
 	color:#eee;
 }
+
 .msgPopSuccess{
-	background: rgba(0,142,0,.95);
-    color:#fff;
+	background: rgba(0,142,0,.92);
+    	color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#004C00;
 }
+
 .msgPopWarning:active
 {
-	background: rgba(255,218,96,.95);
+	background: rgba(255,218,96,.92);
 	color:#111;
 }
+
 .msgPopWarning
 {
-	background: rgba(255,202,43,.95); 
+	background: rgba(255,202,43,.92); 
 	color:#111;
 	border-color:#916D00;
 }
+
 .msgPopError:active{
-	background: rgba(158,0,0,.95);
+	background: rgba(158,0,0,.92);
 	color:#eee;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#7F0000;
 }
+
 .msgPopError{
-    background: rgba(186,0,0,.95); 
+	background: rgba(186,0,0,.92); 
 	color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#7F0000;
 }
+
 .msgPopMessage:active{
-	background: rgba(10,80,150,.95);
+	background: rgba(10,80,150,.92);
 	color:#eee;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#05284C;
 }
+
 .msgPopMessage{
-	background:rgba(12,95,178,.95);
+	background:rgba(12,95,178,.92);
 	color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#05284C;
 }
 
 #msgPopIconCell{width:1%;}
+
 .msgPopCloseCell
 {
 	text-align:right;
 	font-size:.8em;
 }
+
 .msgPopCloseCell a
 {
 	position:relative;
@@ -115,11 +133,13 @@
 	right:-6px;
 	cursor:pointer;
 }
+
 .msgPopContainerSmall .outerMsgPopTbl
 {
 	border:1px solid rgba(255,255,255,.2) !important;
 	border-top:1px solid rgba(255,255,255,.5) !important;
 }
+
 .outerMsgPopTbl
 {
 	background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 73%, rgba(0,0,0,0.06) 100%);
@@ -129,15 +149,16 @@
 	background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
 	background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#0f000000',GradientType=0 );
-
 	border:0;
 	border-radius:4px;
 }
+
 .innerMsgPopTbl
 {
 	border-radius:4px;
 	padding:10px;
 }
+
 .msgPopContainerSmall .innerMsgPopTbl
 {
 	background: -moz-linear-gradient(top,  rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 99%);
@@ -148,32 +169,30 @@
 	background: linear-gradient(to bottom,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38ffffff', endColorstr='#00ffffff',GradientType=0 );
 }
+
 .msgPopTable
 {
 	display:table;
 	width:100%;
 }
+
 .msgPopTable-cell
 {
 	display:table-cell;
 	vertical-align:middle;
 	padding-right:8px;
 }
-.align-right
-{
-	text-align:right;
-}
 
-.msgPopContainerSmall
-{
-	right:10px !important;
-}
+.align-right{text-align:right;}
+
+.msgPopContainerSmall{right:10px !important;}
+
 .msgPopContainerSmall .msgPopSuccess, 
 .msgPopContainerSmall .msgPopWarning, 
 .msgPopContainerSmall .msgPopError, 
 .msgPopContainerSmall .msgPopMessage,
 .msgPopContainerSmall .msgPopLoadMore{
-    box-shadow: 3px 3px 5px rgba(0,0,0,.3) !important;
+    	box-shadow: 3px 3px 5px rgba(0,0,0,.3) !important;
 	margin:5px !important;
 	border-radius:5px !important;
 }
@@ -193,7 +212,6 @@
 .msgPop-top-right, .msgPop-top-left{top:0;}
 .msgPop-top-right{right:0;}
 .msgPop-top-left{left:0;}
-
 .msgPop-bottom-right, .msgPop-bottom-left{bottom:0;}
 .msgPop-bottom-right{right:0;}
 .msgPop-bottom-left{left:0;}
@@ -204,13 +222,13 @@
 		width:100% !important;
 		right:0 !important;
 	}
-	
+
 	.msgPopContainerSmall .msgPopLoadMore
 	{
 		margin:0 !important;
 		border-radius:0 !important;
 	}
-	
+
 	.msgPopContainerSmall .msgPopSuccess, 
 	.msgPopContainerSmall .msgPopWarning, 
 	.msgPopContainerSmall .msgPopError, 
@@ -219,61 +237,87 @@
 		margin:0 !important;
 		border-radius:initial !important;
 	}
+
 	.msgPopContainerSmall #msgPopCloseAllBtn
+
 	{
 		border-radius:0 !important;
 		border-bottom-left-radius:3px !important;
 		border-bottom-right-radius:3px !important;
 		margin:0;
 	}
+
 	.msgPopCloseCell a
 	{
 		font-size:16px;
 	}
+
 	#msgPopContainer, #msgPopCloseAllBtn{
 		font-size:12px;
 	}
+
 	.msgPopSpacer
 	{
 		width:0;
 	}
 }
+
 @media all and (min-width: 641px) and (max-width: 1024px) {
-	.msgPopContainerSmall
-	{
-		width:380px !important;
-	}
 	#msgPopContainer, #msgPopCloseAllBtn{
 		font-size:14px;
 	}
+
 	.msgPopSpacer
 	{
 		width:5%;
 	}
+
+	.msgPopContainerSmall
+	{
+		width:380px !important;
+	}
 }
+
 @media all and (min-width: 1025px) and (max-width: 1280px) {
+
 	.msgPopContainerSmall
 	{
 		width:450px !important;
 	}
+
 	#msgPopContainer, #msgPopCloseAllBtn{
 		font-size:14px;
 	}
+
 	.msgPopSpacer
 	{
 		width:10%;
 	}
+
+	.msgPopContainerSmall .msgPopSpacer
+	{
+		width:5% !important;
+	}
 }
+
 @media all and (min-width: 1281px) and (max-width: 4000px) {
+
 	.msgPopContainerSmall
 	{
 		width:580px !important;
 	}
+
 	#msgPopContainer, #msgPopCloseAllBtn{
 		font-size:16px;
 	}
+
 	.msgPopSpacer
 	{
 		width:15%;
+	}
+	
+	.msgPopContainerSmall .msgPopSpacer
+	{
+		width:5% !important;
 	}
 }
