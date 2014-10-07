@@ -57,46 +57,46 @@
 	box-shadow:0 0 5px rgba(0,0,0,.5);
 }
 .msgPopSuccess:active{
-	background: rgba(0,122,0,.92);
+	background: rgba(0,122,0,.95);
 	color:#eee;
 }
 .msgPopSuccess{
-	background: rgba(0,142,0,.92);
+	background: rgba(0,142,0,.95);
     color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#004C00;
 }
 .msgPopWarning:active
 {
-	background: rgba(255,218,96,.92);
+	background: rgba(255,218,96,.95);
 	color:#111;
 }
 .msgPopWarning
 {
-	background: rgba(255,202,43,.92); 
+	background: rgba(255,202,43,.95); 
 	color:#111;
 	border-color:#916D00;
 }
 .msgPopError:active{
-	background: rgba(158,0,0,.92);
+	background: rgba(158,0,0,.95);
 	color:#eee;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#7F0000;
 }
 .msgPopError{
-    background: rgba(186,0,0,.92); 
+    background: rgba(186,0,0,.95); 
 	color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#7F0000;
 }
 .msgPopMessage:active{
-	background: rgba(10,80,150,.92);
+	background: rgba(10,80,150,.95);
 	color:#eee;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#05284C;
 }
 .msgPopMessage{
-	background:rgba(12,95,178,.92);
+	background:rgba(12,95,178,.95);
 	color:#fff;
 	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
 	border-color:#05284C;
