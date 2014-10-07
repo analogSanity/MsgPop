@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="css/msgPop.css" />
 	<link rel="stylesheet" href="css/site.css" />
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="images/favicon.ico" rel="SHORTCUT ICON">
 	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
 	<script language="javascript" type="text/javascript" src="js/site.js"></script>
 	<title>Sourceageddon</title>
@@ -26,6 +27,8 @@
 		MsgPop.open({
 		Type:			"success",
 		Content:		"Welcome to MsgPop!"});
+		
+		MsgPop.live();
 	});
 
 	function showMessages(){	
@@ -94,6 +97,7 @@
 		MsgID:			"info",
 		ClickAnyClose:	true});
 	}
+
 
 </script>
 
@@ -172,6 +176,58 @@
 					<span class="tab"></span>}<br>
 				});<br>
 			</div>
+			<br><br>
+			<h2>AJAX & JSON</h2>
+			
+			Initialize MsgPopLive and setup demo
+			<div class="code">
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Attach listener to page</span><br>
+				<span class="tab"></span>$(document).ready(<span class="blue bold italic">function</span>(){<br>
+					<span class="tab"></span><span class="tab"></span>MsgPop.live(); <span class="green">// Attaches listener to current page.</span><br>
+				<span class="tab"></span>});<br>
+				<br><br>
+
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Setting up demo function to show how MsgPop.live() works</span><br>	
+				<span class="tab"></span><span class="blue bold italic">function</span> liveDemo(){<br>
+					<span class="tab"></span><span class="tab"></span>$.ajax({<br>
+						<span class="tab"></span><span class="tab"></span><span class="tab"></span>dataType: <span class="gray">"json"</span>,<br>
+						<span class="tab"></span><span class="tab"></span><span class="tab"></span>url: <span class="gray">"json/liveDemo.json"</span>,<br>
+						<span class="tab"></span><span class="tab"></span><span class="tab"></span>success: <span class="blue bold italic">function</span>(data){<br>
+							<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>$(<span class="gray">"#liveDemo"</span>).html(data.content);<br>
+						<span class="tab"></span><span class="tab"></span><span class="tab"></span>}<br>
+					<span class="tab"></span><span class="tab"></span>});<br>
+				<span class="tab"></span>}<br>
+				&#60;/script&#62;
+			</div>
+			<br><br>
+			JSON Return Object
+			<div class="code">
+			{<br>
+				<span class="tab"></span>"MsgPopQueue":[<br>
+					<span class="tab"></span><span class="tab"></span>{"Type":"success","Content":"JSON WORKED!","AutoClose":false}, <span class="green">// Each message listed in a separate object {}</span><br>
+					<span class="tab"></span><span class="tab"></span>{"Type":"message","Content":"You can send back multiple messages if needed!", "AutoClose":false}<br>
+				<span class="tab"></span>],<br>
+				<span class="tab"></span>"content": "&#60;div&#62;This is new &#60;b&#62;text!&#60;/b&#62;&#60;/div&#62;"<br>
+			}
+			</div>
+			
+			<fieldset>
+				<legend><b>Example</b></legend>
+				
+				<p>
+					<button onclick="liveDemo()" type="button" style="width:initial">Click here to fire AJAX Call</button>
+					<button onclick="resetDemo()" type="button" style="width:initial">Reset Demo</button>
+				</p>
+				
+				<b>Demo</b>
+				<div id="liveDemo" style="padding:10px; border:1px solid #999; margin:10px; background:#fff;">
+					When the button above is clicked this text will be replaced with HTML from liveDemo.json.
+				</div>
+			</fieldset>
+
 			
 			<h2>Global Settings</h2>
 			
@@ -224,7 +280,7 @@
 					<td>Type</td>
 					<td class="italic">"message"</td>
 					<td>
-						(message : success : error)
+						("message" : "success" : "warning" : "error")
 					</td>
 				</tr>
 				<tr>
