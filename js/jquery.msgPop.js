@@ -138,7 +138,7 @@ function initMsgPop()
 				msgIcon = '<i class="fa fa-info-circle"></i>';
 				break;
 			default:
-				msg.attr('class', 'msgPopWarning ' + obj.CssClass);	
+				msg.attr('class', 'msgPopMessage ' + obj.CssClass);	
 				msgIcon = '<i class="fa fa-info-circle"></i>';
 		}
 		
@@ -365,9 +365,22 @@ function initMsgPop()
 			{
 				closeAllBtn.slideUp(MsgPop.effectSpeed);
 			}
-	        
 	    }
 	}
-
+	
+	MsgPop.live = function(){
+					$(document).ajaxSuccess(function (event, request, settings) {
+						try {
+							var messages = request.responseJSON.MsgPopQueue;
+							
+							MsgPop.closeAll();
+							
+							for (i = 0; i < messages.length; i++) {
+								MsgPop.open(messages[i]);
+							}
+						}
+						catch (e) { }
+					});
+				}
 	return MsgPop;
 }
