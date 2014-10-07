@@ -1,0 +1,7 @@
+{
+	"MsgPopQueue":[
+		{"Type":"success","Content":"JSON WORKED!","AutoClose":false},
+		{"Type":"message","Content":"You can send back multiple messages if needed!", "AutoClose":false}
+	],
+	"content": "<div>This is new <b>text!</b></div>"
+}
