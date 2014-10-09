@@ -44,7 +44,8 @@ function initMsgPop()
 
 		msgPopContainer = document.getElementById("msgPopContainer");
 		
-		$(msgPopContainer).stop().clearQueue();
+		$(msgPopContainer).stop().clearQueue().removeAttr("style");
+		
 
 		if(MsgPop.displaySmall && MsgPop.notMobile)
 		{
@@ -152,7 +153,7 @@ function initMsgPop()
 		}
 		msgDivContent += '<div class="msgPopTable-cell">' + obj.Content + '</div>';
 		msgDivContent += '</div></div>';
-		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+obj.MsgID+'CloseBtn"></div>';
+		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+msgPopMessageID+'CloseBtn"></div>';
 		msgDivContent += '</div></div></div>';
 		
 		msg.html(msgDivContent);
@@ -378,8 +379,7 @@ function initMsgPop()
 							for (i = 0; i < messages.length; i++) {
 								MsgPop.open(messages[i]);
 							}
-						}
-						catch (e) { }
+						} catch (e) { }
 					});
 				}
 	return MsgPop;
