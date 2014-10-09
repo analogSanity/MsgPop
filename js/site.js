@@ -39,6 +39,7 @@ function resetDemo()
 }
 function liveDemo()
 {
+	MsgPop.closeAll({ClearEvents:true});
 	$.ajax({
 		dataType: "json",
 		url: "json/liveDemo.json",
