@@ -4,17 +4,33 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="css/msgPop.css" />
-	<link rel="stylesheet" href="css/site.css" />
+
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="images/favicon.ico" rel="SHORTCUT ICON">
+	<link rel="stylesheet" href="css/msgPop.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
+	
+	<link href="images/favicon.ico" rel="SHORTCUT ICON">
+	
+	<link rel="stylesheet" href="css/site.css" />
 	<script language="javascript" type="text/javascript" src="js/site.js"></script>
 	<title>Sourceageddon</title>
 	
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
+	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-55484347-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
 </head>
+
+
 
 <script language="javascript" type="text/javascript">
 	var intervalID = 0;
@@ -115,7 +131,15 @@
 	<div id="master">
 		<div id="content">
 			<h1>Message Pop!</h1>
-
+			
+			<p>
+				Message pop is a free plug-in that leverages jQuery and FontAwesome to create a simple to use and clean messaging system.
+			</p>
+			
+			<h3 style="text-align:center; display:block;">
+				<a href="https://github.com/analogSanity/MsgPop/releases" target="_blank">Download the latest release now</a>
+			</h3>
+			
 			<button type="button" onclick="showMessages()">Run Demo</button>
 			
 			<p>
@@ -123,50 +147,73 @@
 				Compatible with: FontAwesome 4.2.0+, jQuery 1.6.0+ in Firefox, Safari, Chrome, Opera, Internet Explorer 8+
 			</p>
 			
+			<h2>Installation</h2>
+			
+			Download MessagePop! add the .css and .js files to your project and reference the following files in the header of your website
+			<div class="code">
+				&#60;head&#62;<br>
+				<span class="tab"></span><span class="green">// CSS Files</span><br>
+				<span class="tab"></span>&#60;link href=<span class="gray">"css/font-awesome.min.css"</span> rel=<span class="gray">"stylesheet"</span>&#62;<br>
+				<span class="tab"></span>&#60;link rel=<span class="gray">"stylesheet"</span> href=<span class="gray">"css/msgPop.css"</span> /&#62;<br><br>
+				<span class="tab"></span><span class="green">// JS Files</span><br>
+				<span class="tab"></span>&#60;script src=<span class="gray">"js/jquery.min.js"</span>>&#60;/script&#62;<br>
+				<span class="tab"></span>&#60;script language=<span class="gray">"javascript" type="text/javascript" src="js/jquery.msgPop.js"</span>>&#60;/script&#62;<br>
+				&#60;/head&#62;
+			</div>
+			
 			
 			<h2>Usage</h2>
 			
 			Open a simple message
 			<div class="code" onclick="demo1()">
-				<span class="green">// Examples:<br>
-				// Display a message for a successful transaction</span><br>
+				<button style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message for a successful transaction</span><br>
 				<br>
-				MsgPop.closeAll();<br>
-				MsgPop.open({<br>
-					<span class="tab"></span>Type:<span class="gray">"success"</span>,<br>
-					<span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span><br>
-				});<br>
+				<span class="tab"></span>MsgPop.closeAll();<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"success"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span><br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
 			</div>
 			<br><br>
 			Playing with switches
 			<div class="code" onclick="demo2()">
-				<span class="green">// Examples:<br>
-				// Display a message for a successful transaction</span><br>
+				<button style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message for a successful transaction</span><br>
 				<br>
-				MsgPop.closeAll();<br>
-				MsgPop.open({<br>
-					<span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
-					<span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span><br>
-					<span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,<br>
-					<span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span><br>
-				});<br>
+				<span class="tab"></span>MsgPop.closeAll();<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span><br>
+					<span class="tab"></span><span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,<br>
+					<span class="tab"></span><span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span><br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
 			</div>
 			<br><br>
 			Setting global switches and hooks
 			<div class="code" onclick="demo3()">
-				<span class="green">// Examples:<br>
-				// Display a message accross the top of the screen</span><br>
+				<button style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message accross the top of the screen</span><br>
 				<br>
-				MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span><br>
-				MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span><br>
+				<span class="tab"></span>MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span><br>
+				<span class="tab"></span>MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span><br>
 				<br>
-				MsgPop.open({<br>
-					<span class="tab"></span>Type:<span class="gray">"error"</span>,<br>
-					<span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span><br>
-					<span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){<br>
-					<span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = true;<br>
-					<span class="tab"></span>}<br>
-				});<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"error"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span><br>
+					<span class="tab"></span><span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){<br>
+					<span class="tab"></span><span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = <span class="blue bold italic">true</span>;<br>
+					<span class="tab"></span><span class="tab"></span>}<br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
 			</div>
 			<br><br>
 			<h2>AJAX & JSON</h2>
@@ -174,6 +221,7 @@
 			Initialize MsgPopLive and setup demo
 			<div class="code">
 				&#60;script&#62;<br>
+				
 				<span class="tab"></span><span class="green">// Examples:<br>
 				<span class="tab"></span>// Attach listener to page</span><br>
 				<span class="tab"></span>$(document).ready(<span class="blue bold italic">function</span>(){<br>
@@ -184,6 +232,7 @@
 				<span class="tab"></span><span class="green">// Examples:<br>
 				<span class="tab"></span>// Setting up demo function to show how MsgPop.live() works</span><br>	
 				<span class="tab"></span><span class="blue bold italic">function</span> liveDemo(){<br>
+					<span class="tab"></span><span class="tab"></span>MsgPop.closeAll({ClearEvents:<span class="blue bold italic">true</span>});<br><br>
 					<span class="tab"></span><span class="tab"></span>$.ajax({<br>
 						<span class="tab"></span><span class="tab"></span><span class="tab"></span>dataType: <span class="gray">"json"</span>,<br>
 						<span class="tab"></span><span class="tab"></span><span class="tab"></span>url: <span class="gray">"json/liveDemo.json"</span>,<br>
@@ -199,7 +248,7 @@
 			<div class="code">
 			{<br>
 				<span class="tab"></span>"MsgPopQueue":[<br>
-					<span class="tab"></span><span class="tab"></span>{"Type":"success","Content":"JSON WORKED!","AutoClose":false}, <span class="green">// Each message listed in a separate object {}</span><br>
+					<span class="tab"></span><span class="tab"></span>{"Type":"success","Content":"JSON WORKED!","AutoClose":false}, <br>
 					<span class="tab"></span><span class="tab"></span>{"Type":"message","Content":"You can send back multiple messages if needed!", "AutoClose":false}<br>
 				<span class="tab"></span>],<br>
 				<span class="tab"></span>"content": "&#60;div&#62;This is new &#60;b&#62;text!&#60;/b&#62;&#60;/div&#62;"<br>
@@ -210,7 +259,7 @@
 				<legend><b>Example</b></legend>
 				
 				<p>
-					<button onclick="liveDemo()" type="button" style="width:initial">Click here to fire AJAX Call</button>
+					<button onclick="liveDemo()" type="button" style="width:initial">Run Demo</button>
 					<button onclick="resetDemo()" type="button" style="width:initial">Reset Demo</button>
 				</p>
 				
