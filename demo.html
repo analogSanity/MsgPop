@@ -49,6 +49,7 @@
 
 	function showMessages(){	
 		MsgPop.closeAll({ClearEvents:	true});
+		MsgPop.displaySmall = true;
 		
 		MsgPop.open({
 		Type:			"success",
@@ -71,7 +72,6 @@
 								intervalID = setInterval(function(){
 									time-=1;
 									$(document.getElementById('time')).html(time);
-									console.log(time);
 								},1000);
 							}	
 						},
@@ -189,7 +189,7 @@
 				<span class="tab"></span>MsgPop.closeAll();<br>
 				<span class="tab"></span>MsgPop.open({<br>
 					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
-					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"You have to click the close button"</span><br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"You have to click the close button",</span><br>
 					<span class="tab"></span><span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,<br>
 					<span class="tab"></span><span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span><br>
 				<span class="tab"></span>});<br>
@@ -208,7 +208,7 @@
 				<br>
 				<span class="tab"></span>MsgPop.open({<br>
 					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"error"</span>,<br>
-					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!"</span><br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!",</span><br>
 					<span class="tab"></span><span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){<br>
 					<span class="tab"></span><span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = <span class="blue bold italic">true</span>;<br>
 					<span class="tab"></span><span class="tab"></span>}<br>
