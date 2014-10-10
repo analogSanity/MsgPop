@@ -7,94 +7,83 @@ var MsgPop = initMsgPop();
 function initMsgPop()
 {
 	MsgPop = {};
-
+	
+	//Public properties
 	MsgPop.effectSpeed = 250;
 	MsgPop.limit = 4;
-	MsgPop.count = 0;
-	MsgPop.actionID = 0;
 	MsgPop.displaySmall = false;
 	MsgPop.position = "top-right";
-	MsgPop.containerCreated = false;
-	MsgPop.closeAllBtnCreated = false;
-	MsgPop.loadMoreBtnCreated = false;
 	
+	//Protected properties
+	var msgPopCount = 0;
+	var msgPopActionID = 0;
+	var msgPopContainer, closeAllBtn, loadMoreBtn;
+	var containerCreated = false;
+	var closeAllBtnCreated = false;
+	var loadMoreBtnCreated = false;
+	
+	//Browser check
 	var deviceAgent = navigator.userAgent.toLowerCase();
+	var notMobile = (deviceAgent.match(/(iphone|ipod|ipad)/) || deviceAgent.match(/(android)/)) ? false : true;
 
-	if(deviceAgent.match(/(iphone|ipod|ipad)/) || deviceAgent.match(/(android)/)){
-		MsgPop.notMobile = false;
-	}
-	else{
-		MsgPop.notMobile = true;
-	}	
-
-	MsgPop.createContainer = function() {
-		var msgPopContainer;
-
-		if(MsgPop.containerCreated == false)
-		{
-			MsgPop.containerCreated = true;
-			var container = document.createElement("div");
-			container.setAttribute('id', 'msgPopContainer');
-			if(MsgPop.displaySmall && MsgPop.notMobile)
-			{
-				container.setAttribute('class', 'msgPopContainerSmall');
+	//Protected methods
+	var	createContainer = function(){
+		if(containerCreated == false){
+			containerCreated = true;
+			if(MsgPop.displaySmall && notMobile){
+				container = $('<div id="msgPopContainer" class="msgPop-'+MsgPop.position+' msgPopContainerSmall msgPopContainerOverflow"></div>');
 			}
-			document.body.appendChild(container);
+			else{
+				container = $('<div id="msgPopContainer" class="msgPop-top-right"></div>');
+			}
+
+			$("body").append(container);
 		}
 
-		msgPopContainer = document.getElementById("msgPopContainer");
+		container = $("#msgPopContainer");
+		container.stop(true,true).clearQueue().removeAttr("style");
 		
-		$(msgPopContainer).stop().clearQueue().removeAttr("style");
-		
-
-		if(MsgPop.displaySmall && MsgPop.notMobile)
-		{
-			$(msgPopContainer).addClass("msgPop-"+MsgPop.position).addClass("msgPopContainerOverflow");
+		if(MsgPop.displaySmall && notMobile){
+			container.removeAttr('class').attr('class','msgPopContainerSmall msgPopContainerOverflow msgPop-'+MsgPop.position);
 		}
 		else{
-			$(msgPopContainer).addClass("msgPop-top-right").removeClass("msgPopContainerOverflow");
+			container.removeAttr('class').attr('class','msgPop-top-right');
 		}
 
-		return msgPopContainer;
+		return container;
 	}
 	
-	MsgPop.createCloseAll = function(container){
-		if (MsgPop.closeAllBtnCreated == false) {
-			MsgPop.closeAllBtnCreated = true;
-			
-			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
-			$(container).append(msgDivCloseAll);
-		}
-		
-		return $(document.getElementById('msgPopCloseAllBtn'));
-	}
-	
-	MsgPop.createLoadMore = function(container){
-		if(MsgPop.loadMoreBtnCreated == false){
-			MsgPop.loadMoreBtnCreated = true;
+	var createLoadMore = function(container){
+		if(loadMoreBtnCreated == false){
+			loadMoreBtnCreated = true;
 			
 			var msgMoreBtn = '<div id="msgDivMore" class="msgPopLoadMore">';
 			msgMoreBtn += '<span onclick="javascript:MsgPop.showMoreMessages();">=== Load More Messages ===</span>';
 			msgMoreBtn += '</div>';
 			
-			$(container).append(msgMoreBtn);
+			container.append(msgMoreBtn);
 		}
-		
-		return $(document.getElementById('msgDivMore'));
+		return $('#msgDivMore');
 	}
 	
-	MsgPop.open = function (obj) {
-		if(typeof(MsgPop[obj.MsgID]) != "undefined"){
-			return obj.MsgID;
+	var createCloseAll = function(container){
+		if (closeAllBtnCreated == false) {
+			closeAllBtnCreated = true;
+			var msgDivCloseAll = '<div type="button" id="msgPopCloseAllBtn" onclick="MsgPop.closeAll()">Close All Messages</div>';
+			container.append(msgDivCloseAll);
 		}
-
-		//Create Container
-		var container = MsgPop.createContainer();
-				
-		MsgPop.count += 1;
-		MsgPop.actionID += 1;
-		var msgPopMessageID = 'msgPop' + MsgPop.actionID;
-
+		return $("#msgPopCloseAllBtn");
+	}
+	
+	MsgPop.open = function(obj){
+		//Increment count build ID
+		msgPopCount += 1;
+		msgPopActionID += 1;
+		var msgPopMessageID = 'msgPop' + msgPopActionID;
+		
+		//Create MsgPopContainer
+		msgPopContainer = createContainer();
+		
 		//Merge Objects
 		var defaultObject = {
 			Type: "message",				// (message : success : error)
@@ -108,81 +97,65 @@ function initMsgPop()
 			AfterClose: null, 				// Fires when the message has closed
 			ShowIcon: true,					// Show / Hide icon next to message 
 			MsgID: msgPopMessageID,	  		// Sets message ID for this specific call
-			CssClass: ""					// Adds additional css classes to the message
+			CssClass: "",					// Adds additional css classes to the message
+			Icon: null						// Default Icon
 		}
 
 		obj = $.extend(mergedObj = {}, defaultObject, obj);	//overwrites any missing values with defaults
 		obj = $.extend(mergedObj = {}, {MarkedForDelete:false}, obj);
 		MsgPop[obj.MsgID] = obj; //creates a property on msgPop object that stores the current object.
 
-		var showMsg = (MsgPop.count <= MsgPop.limit) ? true : false;
+		var showMsg = (msgPopCount <= MsgPop.limit) ? true : false;
 		
 		//Create Message
-		var msg = $(document.createElement("div"));
-		msg.attr("role","alert").attr("id",obj.MsgID);
-			
+		var closeAnywhere = (obj.ClickAnyClose) ? 'onclick="MsgPop.close(\''+obj.MsgID+'\')"' : '';
+		var msgDivHtml = '<div id="'+obj.MsgID+'" role="alert" title="'+obj.Type+'" '+closeAnywhere+'></div>';
+		var msg = $(msgDivHtml);
+	
 		switch (obj.Type) {
 			case "success":
 				msg.attr('class', 'msgPopSuccess ' + obj.CssClass);
-				msgIcon = '<i class="fa fa-check-circle"></i>';
+				obj.Icon = (obj.Icon == null) ? '<i class="fa fa-check-circle"></i>' : obj.Icon;
 				break;
 			case "error":
 				msg.attr('class', 'msgPopError ' + obj.CssClass);
-				msgIcon = '<i class="fa fa-ban"></i>';
+				obj.Icon = (obj.Icon == null) ? '<i class="fa fa-ban"></i>' : obj.Icon;
 				break;
 			case "warning":
 				msg.attr('class', 'msgPopWarning ' + obj.CssClass);		
-				msgIcon = '<i class="fa fa-exclamation-triangle"></i>';
+				obj.Icon = (obj.Icon == null) ? '<i class="fa fa-exclamation-triangle"></i>' : obj.Icon;
 				break;
 			case "message":
 				msg.attr('class', 'msgPopMessage ' + obj.CssClass);				
-				msgIcon = '<i class="fa fa-info-circle"></i>';
+				obj.Icon = (obj.Icon == null) ? '<i class="fa fa-info-circle"></i>' : obj.Icon;
 				break;
 			default:
 				msg.attr('class', 'msgPopMessage ' + obj.CssClass);	
-				msgIcon = '<i class="fa fa-info-circle"></i>';
+				obj.Icon = (obj.Icon == null) ? '<i class="fa fa-info-circle"></i>' : obj.Icon;
 		}
-		
-		msg.attr('title',obj.Type);
-			
+	
+		//Create message content
 		var msgDivContent = '<div class="outerMsgPopTbl"><div class="innerMsgPopTbl"><div class="msgPopTable">';
 		msgDivContent += '<div class="msgPopTable-cell msgPopSpacer">&nbsp;</div>';
 		msgDivContent += '<div class="msgPopTable-cell"><div class="table">';
 		if (obj.ShowIcon) {
-			msgDivContent += '<div class="msgPopTable-cell" id="msgPopIconCell">' + msgIcon + '</div>';
+			msgDivContent += '<div class="msgPopTable-cell" id="msgPopIconCell">' + obj.Icon + '</div>';
 		}
 		msgDivContent += '<div class="msgPopTable-cell">' + obj.Content + '</div>';
 		msgDivContent += '</div></div>';
-		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+msgPopMessageID+'CloseBtn"></div>';
-		msgDivContent += '</div></div></div>';
-		
-		msg.html(msgDivContent);
-		
-		//Setup Closing Behaviour
-		var closeBtn;
+		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+obj.MsgID+'CloseBtn">';
 		if(obj.HideCloseBtn == false)
 		{
-			closeBtn = $(document.createElement("a"));
-			closeBtn.attr('class','msgPopCloseLnk');
-			closeBtn.attr('title','Close');
-			closeBtn.html('<i class="fa fa-times-circle-o"></i>');
-			
-			if(obj.ClickAnyClose == false)
-			{
-				closeBtn.attr('onclick',"MsgPop.close('"+obj.MsgID+"')");
-			}
-		}
+			var closeBtnClick = (obj.ClickAnyClose) ? '' : 'onclick="MsgPop.close(\''+ obj.MsgID +'\')"';
+			msgDivContent += '<a class="msgPopCloseLnk" title="Close" '+closeBtnClick+'><i class="fa fa-times-circle-o"></i></a>';
+		}		
+		msgDivContent += '</div>';
+		msgDivContent += '</div></div></div>';
+		msg.html(msgDivContent);
 
-		if(obj.ClickAnyClose)
-		{
-			msg.attr('onclick',"MsgPop.close('"+obj.MsgID+"')");
-		}
-		
-		$(msg).find("#"+obj.MsgID+"CloseBtn").append(closeBtn);
-
-
-		var loadMoreBtn = MsgPop.createLoadMore(container);
-		var closeAllBtn = MsgPop.createCloseAll(container);
+		//Create Load More & Close All Buttons
+		loadMoreBtn = createLoadMore(container);
+		closeAllBtn = createCloseAll(container);
 		
 		//Attach Message
 		loadMoreBtn.before(msg);
@@ -192,8 +165,17 @@ function initMsgPop()
 			//Call Before Open
 			obj.BeforeOpen();
 
-			$(document.getElementById(obj.MsgID)).slideDown(MsgPop.effectSpeed, function () {
+			msg.slideDown(MsgPop.effectSpeed, function () {
 				obj.AfterOpen();
+				
+				//Choose display mode		
+				if(MsgPop.displaySmall)
+				{
+					container.addClass("msgPopContainerSmall");
+				}		
+				else{
+					container.removeClass("msgPopContainerSmall");
+				}			
 			});
 			
 			if (obj.AutoClose) {
@@ -203,10 +185,10 @@ function initMsgPop()
 			}
 		}
 		else{
-			$(document.getElementById('msgDivMore')).slideDown(MsgPop.effectSpeed);
+			loadMoreBtn.slideDown(MsgPop.effectSpeed);
 		}
 
-		if(MsgPop.count > 1){
+		if(msgPopCount > 1){
 			closeAllBtn.show();
 		}
 		else{
@@ -215,7 +197,7 @@ function initMsgPop()
 
 		return obj.MsgID;
 	};
-
+	
 	MsgPop.close = function (msgID, isCloseAll) {
 		var obj = MsgPop[msgID];
 		
@@ -224,9 +206,8 @@ function initMsgPop()
 			obj.MarkedForDelete = true;
 			MsgPop[msgID] = obj;
 						
-			var allMessages;
 			var isRegularClose = (isCloseAll) ? false : true;
-			var message = $(document.getElementById(msgID));
+			var message = $("#"+msgID);
 
 			if(message.length != 0)
 			{
@@ -247,11 +228,56 @@ function initMsgPop()
 				delete obj;	
 			}
 			
-			MsgPop.count -= 1;
+			msgPopCount -= 1;
 			MsgPop.cleanUp(isCloseAll);	
 		}
 	};
-
+	
+	MsgPop.closeAll = function (settings) {
+		var defaultObject = {
+			ClearEvents: 	false		// Closes each message and animates the close.
+		};
+		obj = $.extend(mergedObj = {}, defaultObject, settings);	//overwrites any missing values with defaults
+				
+		for (var property in MsgPop) {
+			if (MsgPop.hasOwnProperty(property)) {
+				clearTimeout(MsgPop[property].AutoCloseID);
+			}
+		}		
+	
+		if(obj.ClearEvents)
+		{
+			UserSettings = {};
+			UserSettings.effectSpeed = MsgPop.effectSpeed;
+			UserSettings.limit = MsgPop.limit;
+			UserSettings.displaySmall = MsgPop.displaySmall;
+			UserSettings.position = MsgPop.position;
+			
+			initMsgPop();
+			
+			MsgPop.effectSpeed = UserSettings.effectSpeed;
+			MsgPop.limit = UserSettings.limit;
+			MsgPop.displaySmall = UserSettings.displaySmall;
+			MsgPop.position = UserSettings.position;
+			
+			msgPopContainer.remove();
+		}
+		else
+		{
+			var id;
+			$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
+				id = $(this).attr("id");
+				MsgPop.close(id, true);
+			});	
+		}
+	}
+	
+	MsgPop.destroy = function()
+	{	
+		delete(MsgPop);
+		msgPopContainer.remove();	
+	}
+	
 	MsgPop.showMoreMessages = function(){
 		var currentMsg;
 		var count = 0;
@@ -290,97 +316,50 @@ function initMsgPop()
 		});
 
 		if ($('.msgPopError:hidden, .msgPopMessage:hidden, .msgPopWarning:hidden, .msgPopSuccess:hidden').length == 0) {
-			$(document.getElementById("msgDivMore")).clearQueue().stop().slideUp(MsgPop.effectSpeed);
+			loadMoreBtn.stop(true,true).clearQueue().slideUp(MsgPop.effectSpeed);
 		}
-	}
-	
-	//This will close messages one at a time and run any user defined functions
-	MsgPop.closeAll = function (settings) {
-		var defaultObject = {
-			ClearEvents: 	false		// Closes each message and animates the close.
-		};
-		obj = $.extend(mergedObj = {}, defaultObject, settings);	//overwrites any missing values with defaults
-				
-		for (var property in MsgPop) {
-			if (MsgPop.hasOwnProperty(property)) {
-				clearTimeout(MsgPop[property].AutoCloseID);
-			}
-		}		
-				
-		if(obj.ClearEvents)
-		{
-			UserSettings = {};
-			UserSettings.effectSpeed = MsgPop.effectSpeed;
-			UserSettings.limit = MsgPop.limit;
-			UserSettings.displaySmall = MsgPop.displaySmall;
-			UserSettings.position = MsgPop.position;
-			
-			initMsgPop();
-			
-			MsgPop.effectSpeed = UserSettings.effectSpeed;
-			MsgPop.limit = UserSettings.limit;
-			MsgPop.displaySmall = UserSettings.displaySmall;
-			MsgPop.position = UserSettings.position;
-
-			$(document.getElementById('msgPopContainer')).remove();	
-		}
-		else
-		{
-			var id;
-			$('.msgPopError, .msgPopMessage, .msgPopWarning, .msgPopSuccess').each(function () {
-				id = $(this).attr("id");
-				MsgPop.close(id, true);
-			});	
-		}
-	}
-	
-	MsgPop.destroy = function()
-	{	
-		delete(MsgPop);
-		$(document.getElementById('msgPopContainer')).remove();	
-		
-		initMsgPop();
 	}
 	
 	MsgPop.cleanUp = function(isCloseAll) {
-	    if (MsgPop.count == 0)
+	    if (msgPopCount == 0)
 	    {
-			MsgPop.closeAllBtnCreated = false;
-			MsgPop.loadMoreBtnCreated = false;
-
-			$(document.getElementById('msgPopContainer')).stop(true,true).slideUp(MsgPop.effectSpeed, function(){
-				$(this).remove();
-				MsgPop.containerCreated = false;
-			});
-			$(document.getElementById("msgPopCloseAllBtn")).remove();
-			$(document.getElementById("msgDivMore")).remove();
-	    }
-	    else if (MsgPop.count == 1) {
-			var closeAllBtn = $(document.getElementById("msgPopCloseAllBtn"));
+			$('#msgPopContainer').slideUp(MsgPop.effectSpeed, function(){
+				if(msgPopCount==0){
+					$(this).remove();
+					closeAllBtn.remove();
+					loadMoreBtn.remove();
 			
-			if(isCloseAll)
-			{
+					containerCreated = false;
+					closeAllBtnCreated = false;
+					loadMoreBtnCreated = false;
+				}
+			});
+			
+			loadMoreBtn.hide();
+	    }
+	    else if (msgPopCount == 1) {
+			if(isCloseAll){
 				closeAllBtn.hide();
 			}
-			else
-			{
+			else{
 				closeAllBtn.slideUp(MsgPop.effectSpeed);
 			}
 	    }
 	}
 	
 	MsgPop.live = function(){
-					$(document).ajaxSuccess(function (event, request, settings) {
-						try {
-							var messages = request.responseJSON.MsgPopQueue;
-							
-							MsgPop.closeAll();
-							
-							for (i = 0; i < messages.length; i++) {
-								MsgPop.open(messages[i]);
-							}
-						} catch (e) { }
-					});
+		$(document).ajaxSuccess(function (event, request, settings) {
+			try {
+				var messages = request.responseJSON.MsgPopQueue;
+				
+				MsgPop.closeAll();
+				
+				for (i = 0; i < messages.length; i++) {
+					MsgPop.open(messages[i]);
 				}
+			} catch (e) { }
+		});
+	}
+	
 	return MsgPop;
 }
