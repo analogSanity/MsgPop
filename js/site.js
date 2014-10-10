@@ -20,16 +20,19 @@ function demo2()
 
 function demo3()
 {	
-	MsgPop.closeAll({ClearEvents:true});
-	MsgPop.displaySmall = false;
+	// Examples:
+	// Display a message accross the top of the screen
+
+	MsgPop.closeAll({ClearEvents:true}); // Removes messages and resets MsgPop object
+	MsgPop.displaySmall = false; // Global switch that makes messages full screen
 
 	MsgPop.open({
 		Type:"error",
 		Content:"Your transaction failed! Here is the big message to prove it!",
-		AutoClose:false,
-		AfterClose: function(){
-			MsgPop.displaySmall = true;
-		}
+		AutoClose: false,
+		AfterClose:	function(){
+						MsgPop.displaySmall = true;
+					}
 	});
 }
 function resetDemo()
