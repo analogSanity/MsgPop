@@ -122,6 +122,17 @@ table tr td
 	padding:10px 20px;
 	border:2px solid #444;
 }
+
+#demo1
+{
+  height:0px;
+  background:green;
+  -webkit-transition:height .4s ease-in-out;
+  -moz-transition:height .4s ease-in-out;
+  -o-transition:height .4s ease-in-out;
+  transition:height .4s ease-in-out;
+}
+
 @media all and (min-width: 0px) and (max-width: 1024px) {
 	#master
 	{

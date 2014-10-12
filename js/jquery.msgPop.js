@@ -165,7 +165,7 @@ function initMsgPop()
 			//Call Before Open
 			obj.BeforeOpen();
 
-			msg.slideDown(MsgPop.effectSpeed, function () {
+			msg.stop(true,true).clearQueue().slideDown(MsgPop.effectSpeed, function () {
 				obj.AfterOpen();
 				
 				//Choose display mode		
@@ -185,7 +185,7 @@ function initMsgPop()
 			}
 		}
 		else{
-			loadMoreBtn.slideDown(MsgPop.effectSpeed);
+			loadMoreBtn.stop(true,true).clearQueue().slideDown(MsgPop.effectSpeed);
 		}
 
 		if(msgPopCount > 1){
@@ -260,7 +260,7 @@ function initMsgPop()
 			MsgPop.displaySmall = UserSettings.displaySmall;
 			MsgPop.position = UserSettings.position;
 			
-			msgPopContainer.remove();
+			msgPopContainer.stop(true,true).clearQueue().remove();
 		}
 		else
 		{
@@ -275,7 +275,7 @@ function initMsgPop()
 	MsgPop.destroy = function()
 	{	
 		delete(MsgPop);
-		msgPopContainer.remove();	
+		msgPopContainer.stop(true,true).clearQueue().remove();	
 	}
 	
 	MsgPop.showMoreMessages = function(){
@@ -301,7 +301,7 @@ function initMsgPop()
 						obj.BeforeOpen();
 					}
 										
-					currentMsg.slideDown(MsgPop.effectSpeed, function () {
+					currentMsg.stop(true,true).clearQueue().slideDown(MsgPop.effectSpeed, function () {
 						if (jQuery.isFunction(obj["AfterOpen"])) 
 						{
 							obj.AfterOpen();
@@ -323,7 +323,7 @@ function initMsgPop()
 	MsgPop.cleanUp = function(isCloseAll) {
 	    if (msgPopCount == 0)
 	    {
-			$('#msgPopContainer').slideUp(MsgPop.effectSpeed, function(){
+			$('#msgPopContainer').stop(true,true).clearQueue().slideUp(MsgPop.effectSpeed, function(){
 				if(msgPopCount==0){
 					$(this).remove();
 					closeAllBtn.remove();
@@ -342,7 +342,7 @@ function initMsgPop()
 				closeAllBtn.hide();
 			}
 			else{
-				closeAllBtn.slideUp(MsgPop.effectSpeed);
+				closeAllBtn.stop(true,true).clearQueue().slideUp(MsgPop.effectSpeed);
 			}
 	    }
 	}

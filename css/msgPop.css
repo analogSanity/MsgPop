@@ -1,277 +1,53 @@
-/*!
- *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
- *  License - (JS: MIT License, CSS: MIT License)
- */
-
-#msgPopContainer {
-	position:fixed;
-	z-index:999;
-	width:100%;
-  -webkit-transition:all .05s ease-in-out;
-  -moz-transition:all .05s ease-in-out;
-  -o-transition:all .05s ease-in-out;
-  transition:all .05s ease-in-out;
-}
-#msgPopContainer .fa{font-size:1.5em !important;}
-
-.msgPopContainerOverflow
-{
-	overflow:auto;
-	overflow-x:hidden;
-	max-height:100%;
-}
-
-#msgPopCloseAllBtn{
-	background-color:#000;
-	color:#fff;
-	border:1px solid #000;
-	border-bottom-left-radius:3px;
-	border-bottom-right-radius:3px;
-	padding:6px;
-	position:relative;
-	float:right;
-	cursor:pointer;	
-	display:none;
-	box-shadow:0 0 5px rgba(0,0,0,.5);
-}
-
-#msgPopCloseAllBtn:active{
-    color:#000;
-    background:#fff;
-}
-
-.msgPopLoadMore{
-	background-color: rgba(2,2,2,.9) !important;
-	background:#222; /*IE8 support*/
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-}
-
-.msgPopLoadMore:active{
-    background-color:#000;
-}
-
-.msgPopLoadMore span{
-	display:block;
-	width:100%;
-	padding:10px;
-}
-
-.msgPopSuccess, .msgPopWarning, .msgPopError, .msgPopMessage, .msgPopLoadMore{
-	border:1px solid #333;
-	display:none;
-	cursor: default;
-	box-shadow:0 0 5px rgba(0,0,0,.5);
-}
-
-.msgPopSuccess:active{
-	background: rgba(0,122,0,.95) !important;
-	background: #007A00; /*IE8 support*/
-	color:#eee;
-}
-
-.msgPopSuccess{
-	background: rgba(0,142,0,.95) !important;
-	background: #008E00; /*IE8 support*/
-    color:#fff;
-	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
-	border-color:#004C00;
-}
-
-.msgPopWarning:active{
-	background: rgba(255,218,96,.95) !important;
-	background: #FFDA60; /*IE8 support*/
-	color:#111;
-}
-
-.msgPopWarning{
-	background: rgba(255,202,43,.95) !important; 
-	background: #FFCA2B; /*IE8 support*/
-	color:#111;
-	border-color:#916D00;
-}
-
-.msgPopError:active{
-	background: rgba(158,0,0,.95) !important;
-	background: #9E0000; /*IE8 support*/
-	color:#eee;
-	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
-	border-color:#7F0000;
-}
-
-.msgPopError{
-    background: rgba(186,0,0,.95) !important; 
-	background: #BA0000; /*IE8 support*/
-	color:#fff;
-	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
-	border-color:#7F0000;
-}
-
-.msgPopMessage:active{
-	background: rgba(10,80,150,.95) !important;
-	background: #0A5096; /*IE8 support*/
-	color:#eee;
-	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
-	border-color:#05284C;
-}
-
-.msgPopMessage{
-	background:rgba(12,95,178,.95) !important;
-	 background: #0C5FB2; /*IE8 support*/
-	color:#fff;
-	text-shadow: 2px 2px 1px rgba(0,0,0,.7);
-	border-color:#05284C;
-}
-
-#msgPopIconCell{width:1%;}
-
-.msgPopCloseCell{
-	text-align:right;
-	font-size:.8em;
-}
-
-.msgPopCloseCell a{
-	position:relative;
-	top:-6px;
-	right:-6px;
-	cursor:pointer;
-}
-
-.msgPopContainerSmall .outerMsgPopTbl{
-	border:1px solid rgba(255,255,255,.2) !important;
-	border-top:1px solid rgba(255,255,255,.5) !important;
-}
-
+/*! *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014 *  License - (JS: MIT License, CSS: MIT License) */
+#msgPopContainer {	position:fixed;	z-index:999;	width:100%;  -webkit-transition:all .3s ease-in-out;  -moz-transition:all .3s ease-in-out;  -o-transition:all .3s ease-in-out;  transition:all .3s ease-in-out;}#msgPopContainer .fa{font-size:1.5em !important;}
+.msgPopContainerOverflow{	overflow:auto;	overflow-x:hidden;	max-height:100%;}
+#msgPopCloseAllBtn{	background-color:#000;	color:#fff;	border:1px solid #000;	border-bottom-left-radius:3px;	border-bottom-right-radius:3px;	padding:6px;	position:relative;	float:right;	cursor:pointer;		display:none;	box-shadow:0 0 5px rgba(0,0,0,.5);}
+#msgPopCloseAllBtn:active{    color:#000;    background:#fff;}
+.msgPopLoadMore{	background-color: rgba(2,2,2,.9) !important;	background:#222; /*IE8 support*/    color: #fff;    cursor: pointer;    text-align: center;}
+.msgPopLoadMore:active{    background-color:#000;}
+.msgPopLoadMore span{	display:block;	width:100%;	padding:10px;}
+.msgPopSuccess, .msgPopWarning, .msgPopError, .msgPopMessage, .msgPopLoadMore{	border:1px solid #333;	display:none;	cursor: default;	box-shadow:0 0 5px rgba(0,0,0,.5);}
+.msgPopSuccess:active{	background: rgba(0,122,0,.95) !important;	background: #007A00; /*IE8 support*/	color:#eee;}
+.msgPopSuccess{	background: rgba(0,142,0,.95) !important;	background: #008E00; /*IE8 support*/    color:#fff;	text-shadow: 2px 2px 1px rgba(0,0,0,.7);	border-color:#004C00;}
+.msgPopWarning:active{	background: rgba(255,218,96,.95) !important;	background: #FFDA60; /*IE8 support*/	color:#111;}
+.msgPopWarning{	background: rgba(255,202,43,.95) !important; 	background: #FFCA2B; /*IE8 support*/	color:#111;	border-color:#916D00;}
+.msgPopError:active{	background: rgba(158,0,0,.95) !important;	background: #9E0000; /*IE8 support*/	color:#eee;	text-shadow: 2px 2px 1px rgba(0,0,0,.7);	border-color:#7F0000;}
+.msgPopError{    background: rgba(186,0,0,.95) !important; 	background: #BA0000; /*IE8 support*/	color:#fff;	text-shadow: 2px 2px 1px rgba(0,0,0,.7);	border-color:#7F0000;}
+.msgPopMessage:active{	background: rgba(10,80,150,.95) !important;	background: #0A5096; /*IE8 support*/	color:#eee;	text-shadow: 2px 2px 1px rgba(0,0,0,.7);	border-color:#05284C;}
+.msgPopMessage{	background:rgba(12,95,178,.95) !important;	 background: #0C5FB2; /*IE8 support*/	color:#fff;	text-shadow: 2px 2px 1px rgba(0,0,0,.7);	border-color:#05284C;}
+#msgPopIconCell{width:1%;}
+.msgPopCloseCell{	text-align:right;	font-size:.8em;}
+.msgPopCloseCell a{	position:relative;	top:-6px;	right:-6px;	cursor:pointer;}
+.msgPopContainerSmall .outerMsgPopTbl{	border:1px solid rgba(255,255,255,.2) !important;	border-top:1px solid rgba(255,255,255,.5) !important;}
 .outerMsgPopTbl{
-	background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 73%, rgba(0,0,0,0.06) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(73%,rgba(255,255,255,0.04)), color-stop(100%,rgba(0,0,0,0.06)));
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
-	background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
-	background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
-	background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#0f000000',GradientType=0 );
-	border:0;
-	border-radius:4px;
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 73%, rgba(0,0,0,0.06) 100%);	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(73%,rgba(255,255,255,0.04)), color-stop(100%,rgba(0,0,0,0.06)));	background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);	background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);	background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);	background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.04) 73%,rgba(0,0,0,0.06) 100%);	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#0f000000',GradientType=0 );	border:0;	border-radius:4px;}
+.innerMsgPopTbl{	border-radius:4px;	padding:10px;}
+.msgPopContainerSmall .innerMsgPopTbl{	background: -moz-linear-gradient(top,  rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 99%);	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.22)), color-stop(26%,rgba(255,255,255,0)), color-stop(99%,rgba(255,255,255,0)));	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);	background: -o-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);	background: -ms-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);	background: linear-gradient(to bottom,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38ffffff', endColorstr='#00ffffff',GradientType=0 );}
+.msgPopTable{	display:table;	width:100%;}
+.msgPopTable-cell{	display:table-cell;	vertical-align:middle;	padding-right:8px;}
+.align-right{text-align:right;}
+.msgPopContainerSmall{right:10px !important;}
+.msgPopContainerSmall .msgPopSuccess, .msgPopContainerSmall .msgPopWarning, .msgPopContainerSmall .msgPopError, .msgPopContainerSmall .msgPopMessage,.msgPopContainerSmall .msgPopLoadMore{    box-shadow: 3px 3px 5px rgba(0,0,0,.3) !important;	margin:5px !important;	border-radius:5px !important;}
+.msgPopContainerSmall .msgPopLoadMore{	margin:0 5px;	border-radius:4px;}
+.msgPopContainerSmall #msgPopCloseAllBtn{	border-radius:3px !important;	margin:5px 6px;
 }
 
-.innerMsgPopTbl{
-	border-radius:4px;
-	padding:10px;
-}
-
-.msgPopContainerSmall .innerMsgPopTbl{
-	background: -moz-linear-gradient(top,  rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 99%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.22)), color-stop(26%,rgba(255,255,255,0)), color-stop(99%,rgba(255,255,255,0)));
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);
-	background: -o-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);
-	background: -ms-linear-gradient(top,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);
-	background: linear-gradient(to bottom,  rgba(255,255,255,0.22) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 99%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38ffffff', endColorstr='#00ffffff',GradientType=0 );
-}
-
-.msgPopTable{
-	display:table;
-	width:100%;
-}
-
-.msgPopTable-cell{
-	display:table-cell;
-	vertical-align:middle;
-	padding-right:8px;
-}
-
-.align-right{text-align:right;}
-
-.msgPopContainerSmall{right:10px !important;}
-
-.msgPopContainerSmall .msgPopSuccess, 
-.msgPopContainerSmall .msgPopWarning, 
-.msgPopContainerSmall .msgPopError, 
-.msgPopContainerSmall .msgPopMessage,
-.msgPopContainerSmall .msgPopLoadMore{
-    box-shadow: 3px 3px 5px rgba(0,0,0,.3) !important;
-	margin:5px !important;
-	border-radius:5px !important;
-}
-
-.msgPopContainerSmall .msgPopLoadMore{
-	margin:0 5px;
-	border-radius:4px;
-}
-
-.msgPopContainerSmall #msgPopCloseAllBtn{
-	border-radius:3px !important;
-	margin:5px 6px;
-}
-
-.msgPop-top-right, .msgPop-top-left{top:0;}
-.msgPop-top-right{right:0;}
-.msgPop-top-left{left:0;}
-.msgPop-bottom-right, .msgPop-bottom-left{bottom:0;}
-.msgPop-bottom-right{right:0;}
-.msgPop-bottom-left{left:0;}
-
-@media all and (min-width: 0px) and (max-width: 640px) {
-	.msgPopContainerSmall{
-		width:100% !important;
-		right:0 !important;
-	}
-
-	.msgPopContainerSmall .msgPopLoadMore{
-		margin:0 !important;
-		border-radius:0 !important;
-	}
-
-	.msgPopContainerSmall .msgPopSuccess, 
-	.msgPopContainerSmall .msgPopWarning, 
-	.msgPopContainerSmall .msgPopError, 
-	.msgPopContainerSmall .msgPopMessage{
-		box-shadow:0 0 3px rgba(0,0,0,.3) !important;
-		margin:0 !important;
-		border-radius:initial !important;
-	}
-
-	.msgPopContainerSmall #msgPopCloseAllBtn	{
-		border-radius:0 !important;
-		border-bottom-left-radius:3px !important;
-		border-bottom-right-radius:3px !important;
-		margin:0;
-	}
-
-	.msgPopCloseCell a{font-size:16px;}
-
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:12px;}
-
-	.msgPopSpacer{width:0;}
-}
-
+.msgPop-top-right, .msgPop-top-left{top:0;}.msgPop-top-right{right:0;}.msgPop-top-left{left:0;}.msgPop-bottom-right, .msgPop-bottom-left{bottom:0;}.msgPop-bottom-right{right:0;}.msgPop-bottom-left{left:0;}
+@media all and (min-width: 0px) and (max-width: 640px) {	.msgPopContainerSmall{		width:100% !important;		right:0 !important;	}
+	.msgPopContainerSmall .msgPopLoadMore{		margin:0 !important;		border-radius:0 !important;	}	.msgPopContainerSmall .msgPopSuccess, 	.msgPopContainerSmall .msgPopWarning, 	.msgPopContainerSmall .msgPopError, 	.msgPopContainerSmall .msgPopMessage{		box-shadow:0 0 3px rgba(0,0,0,.3) !important;		margin:0 !important;		border-radius:initial !important;	}
+	.msgPopContainerSmall #msgPopCloseAllBtn	{		border-radius:0 !important;		border-bottom-left-radius:3px !important;		border-bottom-right-radius:3px !important;		margin:0;	}
+	.msgPopCloseCell a{font-size:16px;}
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:12px;}
+	.msgPopSpacer{width:0;}}
 @media all and (min-width: 641px) and (max-width: 1024px) {
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
-
-	.msgPopSpacer{width:5%;}
-
-	.msgPopContainerSmall{width:380px !important;}
-}
-
-@media all and (min-width: 1025px) and (max-width: 1280px) {
-
-	.msgPopContainerSmall{width:450px !important;}
-
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
-
-	.msgPopSpacer{width:10%;}
-
-	.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}
-}
-
-@media all and (min-width: 1281px) and (max-width: 4000px) {
-
-	.msgPopContainerSmall{width:580px !important;}
-
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:16px;}
-
-	.msgPopSpacer{width:15%;}
-	
-	.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}
-}
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
+	.msgPopSpacer{width:5%;}	.msgPopContainerSmall{width:380px !important;}}
+@media all and (min-width: 1025px) and (max-width: 1280px) {
+	.msgPopContainerSmall{width:450px !important;}
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
+	.msgPopSpacer{width:10%;}	.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}
+}
+@media all and (min-width: 1281px) and (max-width: 4000px) {
+	.msgPopContainerSmall{width:580px !important;}
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:16px;}
+	.msgPopSpacer{width:15%;}		.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}}

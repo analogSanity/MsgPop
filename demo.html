@@ -40,10 +40,10 @@
 	MsgPop.position = "top-right";
 	
 	$(document).ready(function(){
-		MsgPop.open({
+		var test = MsgPop.open({
 		Type:			"success",
 		Content:		"Welcome to MsgPop!"});
-		
+
 		MsgPop.live();
 	});
 
@@ -165,8 +165,8 @@
 			<h2>Usage</h2>
 			
 			Open a simple message
-			<div class="code" onclick="demo1()">
-				<button style="float:right;">Run Demo</button>
+			<div class="code" >
+				<button onclick="demo1()" style="float:right;">Run Demo</button>
 				&#60;script&#62;<br>
 				<span class="tab"></span><span class="green">// Examples:<br>
 				<span class="tab"></span>// Display a message for a successful transaction</span><br>
@@ -180,8 +180,8 @@
 			</div>
 			<br><br>
 			Playing with switches
-			<div class="code" onclick="demo2()">
-				<button style="float:right;">Run Demo</button>
+			<div class="code">
+				<button  onclick="demo2()" style="float:right;">Run Demo</button>
 				&#60;script&#62;<br>
 				<span class="tab"></span><span class="green">// Examples:<br>
 				<span class="tab"></span>// Display a message for a successful transaction</span><br>
@@ -197,13 +197,13 @@
 			</div>
 			<br><br>
 			Setting global switches and hooks
-			<div class="code" onclick="demo3()">
-				<button style="float:right;">Run Demo</button>
+			<div class="code">
+				<button  onclick="demo3()" style="float:right;">Run Demo</button>
 				&#60;script&#62;<br>
 				<span class="tab"></span><span class="green">// Examples:<br>
-				<span class="tab"></span>// Display a message accross the top of the screen</span><br>
+				<span class="tab"></span>// Display a message across the top of the screen</span><br>
 				<br>
-				<span class="tab"></span>MsgPop.closeAll({ClearEvents:true}); <span class="green">// Removes messages and resets MsgPop object</span><br>
+				<span class="tab"></span>MsgPop.closeAll(); <span class="green">// Removes messages and resets MsgPop object</span><br>
 				<span class="tab"></span>MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span><br>
 				<br>
 				<span class="tab"></span>MsgPop.open({<br>
@@ -287,6 +287,13 @@
 					</td>
 				</tr>
 				<tr>
+					<td>limit</td>
+					<td class="italic">4</td>
+					<td>
+						This global setting for number of messages to display before showing the "Load More" button
+					</td>
+				</tr>				
+				<tr>
 					<td>effectSpeed</td>
 					<td class="italic">250</td>
 					<td>
@@ -361,7 +368,21 @@
 					<td>
 						(true : false) show / hide close button
 					</td>
+				</tr>
+				<tr>
+					<td>ShowIcon</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) show / hide icon
+					</td>
 				</tr>	
+				<tr>
+					<td>Icon</td>
+					<td class="italic">auto</td>
+					<td>
+						Example: Icon: "<i class="fa fa-bicycle"></i>"
+					</td>
+				</tr>						
 				<tr>
 					<td>MsgID</td>
 					<td class="italic">Auto</td>
