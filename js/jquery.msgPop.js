@@ -137,13 +137,13 @@ function initMsgPop()
 		//Create message content
 		var msgDivContent = '<div class="outerMsgPopTbl"><div class="innerMsgPopTbl"><div class="msgPopTable">';
 		msgDivContent += '<div class="msgPopTable-cell msgPopSpacer">&nbsp;</div>';
-		msgDivContent += '<div class="msgPopTable-cell"><div class="table">';
+		msgDivContent += '<div class="msgPopTable-cell"><div class="msgPopTable-table">';
 		if (obj.ShowIcon) {
 			msgDivContent += '<div class="msgPopTable-cell" id="msgPopIconCell">' + obj.Icon + '</div>';
 		}
 		msgDivContent += '<div class="msgPopTable-cell">' + obj.Content + '</div>';
 		msgDivContent += '</div></div>';
-		msgDivContent += '<div class="msgPopTable-cell align-right msgPopSpacer msgPopCloseCell" id="'+obj.MsgID+'CloseBtn">';
+		msgDivContent += '<div class="msgPopTable-cell msgPop-align-right msgPopSpacer msgPopCloseCell" id="'+obj.MsgID+'CloseBtn">';
 		if(obj.HideCloseBtn == false)
 		{
 			var closeBtnClick = (obj.ClickAnyClose) ? '' : 'onclick="MsgPop.close(\''+ obj.MsgID +'\')"';
