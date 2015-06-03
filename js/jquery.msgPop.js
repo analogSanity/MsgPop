@@ -147,7 +147,7 @@ function initMsgPop()
 		if(obj.HideCloseBtn == false)
 		{
 			var closeBtnClick = (obj.ClickAnyClose) ? '' : 'onclick="MsgPop.close(\''+ obj.MsgID +'\')"';
-			msgDivContent += '<a class="msgPopCloseLnk" title="Close" '+closeBtnClick+'><i class="fa fa-times-circle-o"></i></a>';
+			msgDivContent += '<a class="msgPopCloseLnk" title="Close" '+closeBtnClick+'><i class="fa fa-times"></i></a>';
 		}		
 		msgDivContent += '</div>';
 		msgDivContent += '</div></div></div>';
