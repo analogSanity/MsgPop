@@ -192,6 +192,11 @@
 .msgPop-bottom-right{right:0;}
 .msgPop-bottom-left{left:0;}
 
+.selPopAnimate{
+	-webkit-transition: height 250ms ease-in-out;
+	transition: height 250ms ease-in-out;
+}
+
 @media all and (min-width: 0px) and (max-width: 640px) {
 	.msgPopContainerSmall{
 		width:100% !important;
