@@ -31,7 +31,9 @@ function initMsgPop()
 	    {
 	        container = document.createElement('div');
 	        container.setAttribute('id','msgPopContainer');
-	        document.body.appendChild(container);
+	        document.addEventListener('DOMContentLoaded', function () {
+	            document.body.appendChild(container);
+	        });
 	    }
 
 		if(MsgPop.displaySmall && notMobile){
