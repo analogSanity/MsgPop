@@ -2,121 +2,38 @@
 <html lang="en" style="height:100%;">
 
 <head>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/msgPop.css" />
 
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/msgPop.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script language="javascript" type="text/javascript" src="js/jquery.msgPop.js"></script>
-	
-	<link href="images/favicon.ico" rel="SHORTCUT ICON">
-	
-	<link rel="stylesheet" href="css/site.css" />
-	<script language="javascript" type="text/javascript" src="js/site.js"></script>
-	<title>Sourceageddon</title>
-	
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
-	
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script language="javascript" type="text/javascript" src="js/msgPop.js"></script>
 
-	  ga('create', 'UA-55484347-1', 'auto');
-	  ga('send', 'pageview');
+    <link href="images/favicon.ico" rel="SHORTCUT ICON">
 
-	</script>
+    <link rel="stylesheet" href="css/site.css" />
+    <script language="javascript" type="text/javascript" src="js/site.js"></script>
+    <title>Sourceageddon</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
+
+    <script language="javascript" type="text/javascript">
+        var intervalID = 0;
+        var time = 10;
+
+        MsgPop.displaySmall = true;
+        MsgPop.position = "top-right";
+
+        window.onload = function () {
+            MsgPop.open({
+                Type: "success",
+                Content: "This is Message POP!",
+                AutoClose: true,
+                CloseTimer: 10000
+            });
+        }
+    </script>
 </head>
-
-
-
-<script language="javascript" type="text/javascript">
-	var intervalID = 0;
-	var time = 10;
-	
-	MsgPop.displaySmall = true;
-	MsgPop.position = "top-right";
-	
-	$(document).ready(function(){
-		var test = MsgPop.open({
-		Type:			"success",
-		Content:		"Welcome to MsgPop!"});
-
-		MsgPop.live();
-	});
-
-	function showMessages(){	
-		MsgPop.closeAll({ClearEvents:	true});
-		MsgPop.displaySmall = true;
-		
-		MsgPop.open({
-		Type:			"success",
-		Content:		"This has been a success!",
-		AutoClose:		false});
-		
-		MsgPop.open({
-		Type:			"error",
-		Content:		"Fail! You have to click the close button.",
-		AutoClose:		false,
-		ClickAnyClose:	false});
-		
-		MsgPop.open({
-		Type:			"message",
-		Content:		'This message was created using msgPop! It will close in <span id="time">10</span> seconds!',
-		AutoClose:		true,
-		BeforeOpen:		function(){
-							time = 10;
-							if(intervalID == 0){
-								intervalID = setInterval(function(){
-									time-=1;
-									$(document.getElementById('time')).html(time);
-								},1000);
-							}	
-						},
-		BeforeClose:	function(){		
-							time = 10;
-							clearInterval(intervalID);
-							intervalID = 0;
-						},
-		CloseTimer:		10000,
-		ClickAnyClose:	false,
-		HideCloseBtn:	true});
-		
-		MsgPop.open({
-		Type:			"warning",
-		Content:		"This is a warning. Click anywhere to close me!",
-		AutoClose:		false,
-		ClickAnyClose:	true,
-		ShowIcon:		true,
-		HideCloseBtn:	true});
-		
-		MsgPop.open({
-		Type:			"success",
-		Content:		"I was hiding...If you close me you will see an example of my hooks.",
-		AutoClose:		false});
-
-		MsgPop.open({
-		Type:			"error",
-		Content:		"This message will self destruct in 5 seconds!",
-		AutoClose:		true,
-		CloseTimer:		5000,
-		ClickAnyClose:	false,
-		HideCloseBtn:	true});
-
-		
-		MsgPop.open({
-		Type:			"message",
-		Content:		"I have given this message a unique dom ID",
-		AutoClose:		false,
-		MsgID:			"info",
-		ClickAnyClose:	true});
-	}
-
-
-</script>
-
 <body>
 	<div id="banner">
 		<div id="banner-content">
@@ -133,7 +50,8 @@
 			<h1>Message Pop!</h1>
 			
 			<p>
-				Message pop is a free plug-in that leverages jQuery and FontAwesome to create a simple to use and clean messaging system.
+				Message pop is a free plug-in written in pure javascript and leverages FontAwesome to create a simple to use and clean messaging system.
+                <b>No jQuery required!!!</b>
 			</p>
 			
 			<h3 style="text-align:center; display:block;">
@@ -144,9 +62,9 @@
 			
 			<p>
 				Released under the MIT License. Source on Github (changelog).
-				Compatible with: FontAwesome 4.2.0+, jQuery 1.6.0+ in Firefox, Safari, Chrome, Opera, Internet Explorer 8+
+				Compatible with: FontAwesome 4.2.0+ in Firefox, Safari, Chrome, Opera, Internet Explorer 10+
 			</p>
-			
+
 			<h2>Installation</h2>
 			
 			Download MessagePop! add the .css and .js files to your project and reference the following files in the header of your website
@@ -156,8 +74,7 @@
 				<span class="tab"></span>&#60;link href=<span class="gray">"css/font-awesome.min.css"</span> rel=<span class="gray">"stylesheet"</span>&#62;<br>
 				<span class="tab"></span>&#60;link rel=<span class="gray">"stylesheet"</span> href=<span class="gray">"css/msgPop.css"</span> /&#62;<br><br>
 				<span class="tab"></span><span class="green">// JS Files</span><br>
-				<span class="tab"></span>&#60;script src=<span class="gray">"js/jquery.min.js"</span>>&#60;/script&#62;<br>
-				<span class="tab"></span>&#60;script language=<span class="gray">"javascript" type="text/javascript" src="js/jquery.msgPop.js"</span>>&#60;/script&#62;<br>
+				<span class="tab"></span>&#60;script language=<span class="gray">"javascript" type="text/javascript" src="js/msgPop.js"</span>>&#60;/script&#62;<br>
 				&#60;/head&#62;
 			</div>
 			
@@ -222,27 +139,36 @@
 			<div class="code">
 				&#60;script&#62;<br>
 				
-				<span class="tab"></span><span class="green">// Examples:<br>
-				<span class="tab"></span>// Attach listener to page</span><br>
-				<span class="tab"></span>$(document).ready(<span class="blue bold italic">function</span>(){<br>
-					<span class="tab"></span><span class="tab"></span>MsgPop.live(); <span class="green">// Attaches listener to current page.</span><br>
-				<span class="tab"></span>});<br>
-				<br><br>
 
-				<span class="tab"></span><span class="green">// Examples:<br>
-				<span class="tab"></span>// Setting up demo function to show how MsgPop.live() works</span><br>	
-				<span class="tab"></span><span class="blue bold italic">function</span> liveDemo(){<br>
-					<span class="tab"></span><span class="tab"></span>MsgPop.closeAll({ClearEvents:<span class="blue bold italic">true</span>});<br><br>
-					<span class="tab"></span><span class="tab"></span>$.ajax({<br>
-						<span class="tab"></span><span class="tab"></span><span class="tab"></span>dataType: <span class="gray">"json"</span>,<br>
-						<span class="tab"></span><span class="tab"></span><span class="tab"></span>url: <span class="gray">"json/liveDemo.json"</span>,<br>
-						<span class="tab"></span><span class="tab"></span><span class="tab"></span>success: <span class="blue bold italic">function</span>(data){<br>
-							<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>$(<span class="gray">"#liveDemo"</span>).html(data.content);<br>
-						<span class="tab"></span><span class="tab"></span><span class="tab"></span>}<br>
-					<span class="tab"></span><span class="tab"></span>});<br>
+
+                <span class="tab"></span><span class="green">// Examples:<br></span>
+                <span class="tab"></span><span class="green">// Setting up demo function to show how MsgPop.live() works</span><br>	
+
+                <span class="tab"></span>function liveDemo(){<br>
+				<span class="tab"></span><span class="tab"></span><span class="blue bold">var</span> xhttp = <span class="blue bold">new</span> XMLHttpRequest();<br>
+                <span class="tab"></span><span class="tab"></span>xhttp.onreadystatechange = <span class="blue bold italic">function</span>  () <br>
+				<span class="tab"></span><span class="tab"></span>{<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">if</span> (this.readyState == 4 && this.status == 200) <br>
+				<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>{<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span> MsgPop.closeAll();
+				<br><br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">var</span> obj = JSON.parse(this.responseText);<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">for</span> (i = 0; i &#60; obj.MsgPopQueue.length; i++) {<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span> MsgPop.open(obj.MsgPopQueue[i]);
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><br>
+				<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>}
+				<br><br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>document.getElementById('liveDemo').innerHTML = obj.content;
+                <br><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>}<br>
+                <span class="tab"></span><span class="tab"></span>};<br><br>
+                <span class="tab"></span><span class="tab"></span>xhttp.open("GET", "json/liveDemo.json", true);
+                <span class="tab"></span><span class="tab"></span>xhttp.send();<br>
 				<span class="tab"></span>}<br>
-				&#60;/script&#62;
-			</div>
+				
+
+
+    &#60;/script&#62;
+</div>
 			<br><br>
 			JSON Return Object
 			<div class="code">
@@ -295,7 +221,7 @@
 				</tr>				
 				<tr>
 					<td>effectSpeed</td>
-					<td class="italic">250</td>
+					<td class="italic">350</td>
 					<td>
 						Number of milliseconds all animated effects take to complete.
 					</td>
@@ -418,28 +344,28 @@
 				</tr>
 				<tr>
 					<td>BeforeOpen</td>
-					<td class="italic">false</td>
+					<td class="italic">null</td>
 					<td>
 						Callback fires before message opens
 					</td>
 				</tr>
 				<tr>
 					<td>AfterOpen</td>
-					<td class="italic">false</td>
+					<td class="italic">null</td>
 					<td>
 						Callback fires after message opens
 					</td>
 				</tr>
 				<tr>
 					<td>BeforeClose</td>
-					<td class="italic">false</td>
+					<td class="italic">null</td>
 					<td>
 						Callback fires before message closes
 					</td>
 				</tr>
 				<tr>
 					<td>AfterClosed</td>
-					<td class="italic">false</td>
+					<td class="italic">null</td>
 					<td>
 						Callback fires after message closes
 					</td>
