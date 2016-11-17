@@ -1,1 +1,378 @@
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
+<html lang="en" style="height:100%;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/msgPop.css" />
+
+    <script language="javascript" type="text/javascript" src="js/msgPop.js"></script>
+
+    <link href="images/favicon.ico" rel="SHORTCUT ICON">
+
+    <link rel="stylesheet" href="css/site.css" />
+    <script language="javascript" type="text/javascript" src="js/site.js"></script>
+    <title>Sourceageddon</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin" rel="stylesheet"></link>
+
+    <script language="javascript" type="text/javascript">
+        var intervalID = 0;
+        var time = 10;
+
+        MsgPop.displaySmall = true;
+        MsgPop.position = "top-right";
+
+        window.onload = function () {
+            MsgPop.open({
+                Type: "success",
+                Content: "This is Message POP!",
+                AutoClose: true,
+                CloseTimer: 10000
+            });
+        }
+    </script>
+</head>
+<body>
+	<div id="banner">
+		<div id="banner-content">
+			<img src="images/logo.png" > 
+			<p style="float:left; margin-left:5px;margin-top:-5px;">
+			By:<br>
+			Tony Laurene
+			</p>
+		</div>
+	</div>
+
+	<div id="master">
+		<div id="content">
+			<h1>Message Pop!</h1>
+			
+			<p>
+				Message pop is a free plug-in written in pure javascript and leverages FontAwesome to create a simple to use and clean messaging system.
+                <b>No jQuery required!!!</b>
+			</p>
+			
+			<h3 style="text-align:center; display:block;">
+				<a href="https://github.com/analogSanity/MsgPop/releases" target="_blank">Download the latest release now</a>
+			</h3>
+			
+			<button type="button" onclick="showMessages()">Run Demo</button>
+			
+			<p>
+				Released under the MIT License. Source on Github (changelog).
+				Compatible with: FontAwesome 4.2.0+ in Firefox, Safari, Chrome, Opera, Internet Explorer 10+
+			</p>
+
+			<h2>Installation</h2>
+			
+			Download MessagePop! add the .css and .js files to your project and reference the following files in the header of your website
+			<div class="code">
+				&#60;head&#62;<br>
+				<span class="tab"></span><span class="green">// CSS Files</span><br>
+				<span class="tab"></span>&#60;link href=<span class="gray">"css/font-awesome.min.css"</span> rel=<span class="gray">"stylesheet"</span>&#62;<br>
+				<span class="tab"></span>&#60;link rel=<span class="gray">"stylesheet"</span> href=<span class="gray">"css/msgPop.css"</span> /&#62;<br><br>
+				<span class="tab"></span><span class="green">// JS Files</span><br>
+				<span class="tab"></span>&#60;script language=<span class="gray">"javascript" type="text/javascript" src="js/msgPop.js"</span>>&#60;/script&#62;<br>
+				&#60;/head&#62;
+			</div>
+			
+			
+			<h2>Usage</h2>
+			
+			Open a simple message
+			<div class="code" >
+				<button onclick="demo1()" style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message for a successful transaction</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.closeAll();<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"success"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction was a success!"</span><br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
+			</div>
+			<br><br>
+			Playing with switches
+			<div class="code">
+				<button  onclick="demo2()" style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message for a successful transaction</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.closeAll();<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"You have to click the close button",</span><br>
+					<span class="tab"></span><span class="tab"></span>AutoClose:<span class="blue bold italic">false</span>,<br>
+					<span class="tab"></span><span class="tab"></span>ClickAnyClose:<span class="blue bold italic">false</span><br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
+			</div>
+			<br><br>
+			Setting global switches and hooks
+			<div class="code">
+				<button  onclick="demo3()" style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display a message across the top of the screen</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.closeAll(); <span class="green">// Removes messages and resets MsgPop object</span><br>
+				<span class="tab"></span>MsgPop.displaySmall = false; <span class="green">// Global switch that makes messages full screen</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"error"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"Your transaction failed! Here is the big message to prove it!",</span><br>
+					<span class="tab"></span><span class="tab"></span>AfterClose:<span class="blue bold italic">function</span>(){<br>
+					<span class="tab"></span><span class="tab"></span><span class="tab"></span>MsgPop.displaySmall = <span class="blue bold italic">true</span>;<br>
+					<span class="tab"></span><span class="tab"></span>}<br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
+			</div>
+			<br><br>
+			<h2>AJAX & JSON</h2>
+			
+			Initialize MsgPopLive and setup demo
+			<div class="code">
+				&#60;script&#62;<br>
+				
+
+
+                <span class="tab"></span><span class="green">// Examples:<br></span>
+                <span class="tab"></span><span class="green">// Setting up demo function to show how MsgPop.live() works</span><br>	
+
+                <span class="tab"></span>function liveDemo(){<br>
+				<span class="tab"></span><span class="tab"></span><span class="blue bold">var</span> xhttp = <span class="blue bold">new</span> XMLHttpRequest();<br>
+                <span class="tab"></span><span class="tab"></span>xhttp.onreadystatechange = <span class="blue bold italic">function</span>  () <br>
+				<span class="tab"></span><span class="tab"></span>{<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">if</span> (this.readyState == 4 && this.status == 200) <br>
+				<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>{<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span> MsgPop.closeAll();
+				<br><br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">var</span> obj = JSON.parse(this.responseText);<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="blue bold">for</span> (i = 0; i &#60; obj.MsgPopQueue.length; i++) {<br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span> MsgPop.open(obj.MsgPopQueue[i]);
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><br>
+				<span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>}
+				<br><br>
+                <span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>document.getElementById('liveDemo').innerHTML = obj.content;
+                <br><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>}<br>
+                <span class="tab"></span><span class="tab"></span>};<br><br>
+                <span class="tab"></span><span class="tab"></span>xhttp.open("GET", "json/liveDemo.json", true);
+                <span class="tab"></span><span class="tab"></span>xhttp.send();<br>
+				<span class="tab"></span>}<br>
+				
+
+
+    &#60;/script&#62;
+</div>
+			<br><br>
+			JSON Return Object
+			<div class="code">
+			{<br>
+				<span class="tab"></span>"MsgPopQueue":[<br>
+					<span class="tab"></span><span class="tab"></span>{"Type":"success","Content":"JSON WORKED!","AutoClose":false}, <br>
+					<span class="tab"></span><span class="tab"></span>{"Type":"message","Content":"You can send back multiple messages if needed!", "AutoClose":false}<br>
+				<span class="tab"></span>],<br>
+				<span class="tab"></span>"content": "&#60;div&#62;This is new &#60;b&#62;text!&#60;/b&#62;&#60;/div&#62;"<br>
+			}
+			</div>
+			
+			<fieldset>
+				<legend><b>Example</b></legend>
+				
+				<p>
+					<button onclick="liveDemo()" type="button" style="width:initial">Run Demo</button>
+					<button onclick="resetDemo()" type="button" style="width:initial">Reset Demo</button>
+				</p>
+				
+				<b>Demo</b>
+				<div id="liveDemo" style="padding:10px; border:1px solid #999; margin:10px; background:#fff;">
+					When the button above is clicked this text will be replaced with HTML from liveDemo.json.
+				</div>
+			</fieldset>
+
+			
+			<h2>Global Settings</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>displaySmall</td>
+					<td class="italic">True</td>
+					<td>
+						This global setting will toggle full screen 
+						messages or small.
+					</td>
+				</tr>
+				<tr>
+					<td>limit</td>
+					<td class="italic">4</td>
+					<td>
+						This global setting for number of messages to display before showing the "Load More" button
+					</td>
+				</tr>				
+				<tr>
+					<td>effectSpeed</td>
+					<td class="italic">350</td>
+					<td>
+						Number of milliseconds all animated effects take to complete.
+					</td>
+				</tr>
+				<tr>
+					<td>position</td>
+					<td class="italic">"top-right"</td>
+					<td>
+						Use this option in conjunction with "<b>displaySmall</b>."<br>
+						Valid options include the following.
+						<ul>
+							<li>"top-left"</li>
+							<li>"top-right"</li>
+							<li>"bottom-left"</li>
+							<li>"bottom-right"</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			
+			<h2>Message Settings</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>Type</td>
+					<td class="italic">"message"</td>
+					<td>
+						("message" : "success" : "warning" : "error")
+					</td>
+				</tr>
+				<tr>
+					<td>Content</td>
+					<td class="italic">null</td>
+					<td>
+						Content you would like to load into the message. Accepts HTML.
+					</td>
+				</tr>
+				<tr>
+					<td>AutoClose</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) -- false: user will have to click either the 
+						message or close button in order to close the message.
+					</td>
+				</tr>
+				<tr>
+					<td>CloseTimer</td>
+					<td class="italic">7000</td>
+					<td>
+						Number of milliseconds before the message closes. This must be used in
+						conjunction with <b>AutoClose</b>.
+					</td>
+				</tr>
+				<tr>
+					<td>ClickAnyClose</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) When set to false the user will be forced to click the close
+						button in order to close the message.
+					</td>
+				</tr>
+				<tr>
+					<td>HideCloseBtn</td>
+					<td class="italic">false</td>
+					<td>
+						(true : false) show / hide close button
+					</td>
+				</tr>
+				<tr>
+					<td>ShowIcon</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) show / hide icon
+					</td>
+				</tr>	
+				<tr>
+					<td>Icon</td>
+					<td class="italic">auto</td>
+					<td>
+						Example: Icon: "<i class="fa fa-bicycle"></i>"
+					</td>
+				</tr>						
+				<tr>
+					<td>MsgID</td>
+					<td class="italic">Auto</td>
+					<td>
+						This will allow a user to set the "id" attribute of the message.
+						This is especially helpful when chaining events later that need
+						to access a paticular message.
+					</td>
+				</tr>
+				<tr>
+					<td>ShowIcon</td>
+					<td class="italic">true</td>
+					<td>
+						(true : false) Show / hide message icon left of the content
+					</td>
+				</tr>	
+				<tr>
+					<td>CssClass</td>
+					<td class="italic">null</td>
+					<td>
+						Allows the user to add additional classes to a message
+					</td>
+				</tr>				
+			</table>
+			
+			<h2>Callbacks</h2>
+			
+			<table cellspacing="5" cellpadding="5">
+				<tr>
+					<th width="15%">Property</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>BeforeOpen</td>
+					<td class="italic">null</td>
+					<td>
+						Callback fires before message opens
+					</td>
+				</tr>
+				<tr>
+					<td>AfterOpen</td>
+					<td class="italic">null</td>
+					<td>
+						Callback fires after message opens
+					</td>
+				</tr>
+				<tr>
+					<td>BeforeClose</td>
+					<td class="italic">null</td>
+					<td>
+						Callback fires before message closes
+					</td>
+				</tr>
+				<tr>
+					<td>AfterClosed</td>
+					<td class="italic">null</td>
+					<td>
+						Callback fires after message closes
+					</td>
+				</tr>			
+			</table>
+		</div>
+	</div>
+</body>
+</html>
