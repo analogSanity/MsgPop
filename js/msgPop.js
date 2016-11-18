@@ -447,7 +447,7 @@ function initMsgPop()
 			}
 		}
 
-		if (count < MsgPop.limit)
+		if (count < MsgPop.limit || MsgPop.limit + count == msgPopCount)
 		{
 		    loadMoreBtn.style.display = 'none';
 		}
