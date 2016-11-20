@@ -331,7 +331,7 @@ function initMsgPop()
 				//Choose display mode		
 				if(MsgPop.displaySmall)
 				{
-					msgPopContainer.className += "msgPopContainerSmall";
+					msgPopContainer.className += " msgPopContainerSmall ";
 				}		
 				else{
 					msgPopContainer.className = msgPopContainer.className.replace(/\bmsgPopContainerSmall\b/,'').trim();
