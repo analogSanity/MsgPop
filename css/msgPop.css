@@ -202,6 +202,9 @@
 		width:100% !important;
 		right:0 !important;
 	}
+	
+	.innerMsgPopTbl{padding:12px;}
+	.msgPopTable-cell{padding-right:12px;}
 
 	.msgPopContainerSmall .msgPopLoadMore{
 		margin:0 !important;
@@ -226,14 +229,15 @@
 
 	.msgPopCloseCell a{font-size:16px;}
 
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:12px;}
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:15px;}
 
 	.msgPopSpacer{width:0;}
 }
 
 @media all and (min-width: 641px) and (max-width: 1024px) {
-	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
-
+	#msgPopContainer, #msgPopCloseAllBtn{font-size:16px;}
+	.innerMsgPopTbl{padding:12px;}
+	.msgPopTable-cell{padding-right:12px;}
 	.msgPopSpacer{width:5%;}
 
 	.msgPopContainerSmall{width:380px !important;}
