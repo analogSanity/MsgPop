@@ -116,6 +116,16 @@ function demo4(){
 		HideCloseBtn: true
 	});
 }
+function demo5(){
+	MsgPop.closeAll();
+	MsgPop.position = "top-left";
+	
+	MsgPop.open({
+		Type:"message",
+		Content: "I'm in the top left corner!",
+		AutoClose: false
+	})
+}
 function liveDemo(){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
