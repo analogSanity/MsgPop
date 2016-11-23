@@ -159,6 +159,24 @@
 				</p>
 			</fieldset>
 			<br><br>
+			Change Message Position
+			<div class="code">
+				<button  onclick="demo5()" style="float:right;">Run Demo</button>
+				&#60;script&#62;<br>
+				<span class="tab"></span><span class="green">// Examples:<br>
+				<span class="tab"></span>// Display attach a message to a specific element.</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.closeAll(); <span class="green">// Removes messages and resets MsgPop object</span><br>
+				<span class="tab"></span>MsgPop.position = "top-left"; <span class="green">// Sets the position of non anchored messages.</span><br>
+				<br>
+				<span class="tab"></span>MsgPop.open({<br>
+					<span class="tab"></span><span class="tab"></span>Type:<span class="gray">"message"</span>,<br>
+					<span class="tab"></span><span class="tab"></span>Content:<span class="gray">"I'm in the top left corner!",</span><br>
+					<span class="tab"></span><span class="tab"></span>AutoClose:<span class="blue bold italic">false</span><br>
+				<span class="tab"></span>});<br>
+				&#60;/script&#62;<br>
+			</div>
+			<br><br>
 			<h2>AJAX & JSON</h2>
 			
 			Initialize MsgPopLive and setup demo
