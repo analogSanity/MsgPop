@@ -47,6 +47,7 @@
 	min-width:280px;
 	max-width:300px;
 	border-radius:4px;
+	z-index:999;
 }
 .msgPopAnchored .msgPopSpacer{
 	width:1px;
