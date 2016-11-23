@@ -14,7 +14,45 @@
   box-sizing:initial !important;
 }
 #msgPopContainer .fa{font-size:1.5em !important;}
-
+#msgPopSmallAttached{
+	position:absolute;
+}
+.msgPopTriangle-Up {
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	position:absolute;
+	top:-16px;
+	margin-left:16px;
+}
+.msgPopSuccess .msgPopTriangle-Up {
+	border-bottom: 16px solid rgba(0,142,0,.95);
+	border-bottom: 16px solid #008E00;  /*IE8 support*/
+}
+.msgPopError .msgPopTriangle-Up {
+	border-bottom: 16px solid  rgba(186,0,0,.95);
+	border-bottom: 16px solid #BA0000; /*IE8 support*/
+}
+.msgPopMessage .msgPopTriangle-Up {
+	border-bottom: 16px solid rgb(23, 102, 181);
+	border-bottom: 16px solid #1766B5; /*IE8 support*/
+}
+.msgPopWarning .msgPopTriangle-Up {
+	border-bottom: 16px solid rgba(255,202,43,.95);
+	border-bottom: 16px solid #FFCA2B; /*IE8 support*/
+}
+.msgPopAnchored{
+	position:absolute !important;
+	min-width:280px;
+	max-width:300px;
+	border-radius:4px;
+}
+.msgPopAnchored .msgPopSpacer{
+	width:1px;
+	padding:0;
+	margin:0;
+}
 .msgPopContainerOverflow
 {
 	overflow:auto;
@@ -63,6 +101,7 @@
 	display:none;
 	cursor: default;
 	box-shadow:0 0 5px rgba(0,0,0,.5);
+	font-family: "open sans",sans-serif;
 }
 
 .msgPopSuccess:active{
@@ -128,12 +167,13 @@
 
 .msgPopCloseCell a{
 	position:relative;
-	color:#fff;
+	color:inherit;
 	top:-6px;
 	right:-6px;
 	cursor:pointer;
 	font-size:10px !important;
 }
+
 
 .msgPopContainerSmall .outerMsgPopTbl{
 	border:1px solid rgba(255,255,255,.2) !important;
@@ -239,28 +279,24 @@
 	.innerMsgPopTbl{padding:12px;}
 	.msgPopTable-cell{padding-right:12px;}
 	.msgPopSpacer{width:5%;}
-
+	.msgPopAnchored{font-size:16px;}
 	.msgPopContainerSmall{width:380px !important;}
 }
 
 @media all and (min-width: 1025px) and (max-width: 1280px) {
 
 	.msgPopContainerSmall{width:450px !important;}
-
 	#msgPopContainer, #msgPopCloseAllBtn{font-size:14px;}
-
 	.msgPopSpacer{width:10%;}
-
+	.msgPopAnchored{font-size:16px;}
 	.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}
 }
 
 @media all and (min-width: 1281px) and (max-width: 4000px) {
 
 	.msgPopContainerSmall{width:580px !important;}
-
 	#msgPopContainer, #msgPopCloseAllBtn{font-size:16px;}
-
 	.msgPopSpacer{width:15%;}
-	
+	.msgPopAnchored{font-size:16px;}
 	.msgPopContainerSmall .msgPopSpacer{	width:5% !important;}
 }
