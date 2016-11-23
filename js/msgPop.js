@@ -22,7 +22,21 @@ function initMsgPop()
 	//Browser check
 	var deviceAgent = navigator.userAgent.toLowerCase();
 	var notMobile = (deviceAgent.match(/(iphone|ipod|ipad)/) || deviceAgent.match(/(android)/)) ? false : true;
+	
+	window.addEventListener("resize", moveAnchoredMessages);		
 
+	function moveAnchoredMessages(){
+		for (var property in MsgPop) {
+			if (MsgPop.hasOwnProperty(property) && property.indexOf("msgPop") !== -1 && MsgPop[property]["AnchorTo"] != null) {
+				var msg = document.getElementById(MsgPop[property]['MsgID']);
+				var anchor = document.getElementById(MsgPop[property]['AnchorTo']);
+				if(msg!=null){
+					msg.style.left = anchor.offsetLeft-16+'px';
+				}
+			}
+		}
+	}
+	
 	//Protected Methods
 	var	createContainer = function(){
 	    container = document.getElementById('msgPopContainer');
@@ -117,6 +131,32 @@ function initMsgPop()
 	        }
 	    });
 	}
+	var openLogic = function(msg, obj){
+		//Call Before Open
+		if (typeof obj["BeforeOpen"] === "function") {
+			obj.BeforeOpen();
+		}
+
+		animate(msg, MsgPop.effectSpeed).open(function () {
+			if (typeof obj["AfterOpen"] === "function") {
+				obj.AfterOpen();
+			}
+
+			//Choose display mode		
+			if(MsgPop.displaySmall)
+			{
+				msgPopContainer.className += " msgPopContainerSmall ";
+			}		
+			else{
+				msgPopContainer.className = msgPopContainer.className.replace(/\bmsgPopContainerSmall\b/,'').trim();
+			}	
+		});
+
+		
+		if (obj.AutoClose) {
+			MsgPop.close(obj,false);
+		}
+	}
 	var cloneObj = function (obj1, obj2) {
 
 	    for (var p in obj2) {
@@ -156,7 +196,7 @@ function initMsgPop()
 	            element.style.overflow = 'hidden';
 	            element.style.display = 'block';
 
-	            setTimeout(function () {
+	           setTimeout(function () {
 	                element.style.height = visibleHeight + 'px';
 
 	                setTimeout(function () {
@@ -166,7 +206,7 @@ function initMsgPop()
 	                    element.style.removeProperty('height');
 
 	                    if (typeof (afterOpen) !== 'undefined') {
-	                        afterOpen();
+							afterOpen();
 	                    }
 
 	                }, effectSpd);
@@ -246,7 +286,8 @@ function initMsgPop()
 			ShowIcon: true,					// Show / Hide icon next to message 
 			MsgID: msgPopMessageID,	  		// Sets message ID for this specific call
 			CssClass: "",					// Adds additional css classes to the message
-			Icon: null						// Default Icon
+			Icon: null,						// Default Icon
+			AnchorTo: null					//Where to anchor control.
 		}
 
 		//overwrites any missing values with defaults
@@ -290,7 +331,12 @@ function initMsgPop()
 		}
 	
 		//Create message content
-		var msgDivContent = '<div class="outerMsgPopTbl"><div class="innerMsgPopTbl"><div class="msgPopTable">';
+		var msgDivContent = '';
+		
+		msgDivContent += '<div class="msgPopTriangle-Up">&nbsp;</div>';	
+		msgDivContent += '<div class="outerMsgPopTbl">';
+
+		msgDivContent += '<div class="innerMsgPopTbl"><div class="msgPopTable">';
 		msgDivContent += '<div class="msgPopTable-cell msgPopSpacer">&nbsp;</div>';
 		msgDivContent += '<div class="msgPopTable-cell"><div class="msgPopTable-table">';
 		if (obj.ShowIcon) {
@@ -307,52 +353,42 @@ function initMsgPop()
 		msgDivContent += '</div>';
 		msgDivContent += '</div></div></div>';
 		msg.innerHTML = msgDivContent;
-
+		
 		//Create Load More & Close All Buttons
 		loadMoreBtn = createLoadMore(msgPopContainer);
 		closeAllBtn = createCloseAll(msgPopContainer);
 		
-		//Attach Message
-		msgPopContainer.insertBefore(msg, loadMoreBtn);
-		
-
-		if(showMsg)
+		if(obj.AnchorTo == null)
 		{
-		    //Call Before Open
-		    if (typeof obj["BeforeOpen"] === "function") {
-		        obj.BeforeOpen();
-		    }
-
-		    animate(msg, MsgPop.effectSpeed).open(function () {
-		        if (typeof obj["AfterOpen"] === "function") {
-		            obj.AfterOpen();
-		        }
-
-				//Choose display mode		
-				if(MsgPop.displaySmall)
-				{
-					msgPopContainer.className += " msgPopContainerSmall ";
-				}		
-				else{
-					msgPopContainer.className = msgPopContainer.className.replace(/\bmsgPopContainerSmall\b/,'').trim();
-				}	
-			});
-
+			msgPopContainer.insertBefore(msg, loadMoreBtn);
 			
-			if (obj.AutoClose) {
-				MsgPop.close(obj,false);
+			if(showMsg)
+			{
+				openLogic(msg, obj);
+			}
+			else{
+				loadMoreBtn.style.display = 'block';
+			}
+
+			if(msgPopCount > 1){
+				closeAllBtn.style.display = 'block';
+			}
+			else{
+				closeAllBtn.style.display = 'none';
 			}
 		}
 		else{
-			loadMoreBtn.style.display = 'block';
+			//Attach Message
+			msg.className += ' msgPopAnchored ';
+			
+			var anchorElem = document.getElementById(obj.AnchorTo);
+			msg.style.left = anchorElem.offsetLeft-16+'px';
+			msg.style.marginTop = '16px';
+			anchorElem.parentNode.insertBefore(msg, anchorElem.nextSibling);
+			
+			openLogic(msg, obj);
 		}
 
-		if(msgPopCount > 1){
-			closeAllBtn.style.display = 'block';
-		}
-		else{
-			closeAllBtn.style.display = 'none';
-		}
 
 		return obj.MsgID;
 	};
