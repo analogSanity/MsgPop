@@ -105,6 +105,17 @@ function demo3(){
 		}
 	});
 }
+function demo4(){
+	MsgPop.closeAll();
+
+	MsgPop.open({
+		Type:		"error",
+		Content:	"Invalid input! Numbers only please.",
+		AnchorTo: "ZipCodeTxt",
+		AutoClose: false,
+		HideCloseBtn: true
+	});
+}
 function liveDemo(){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
