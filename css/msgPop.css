@@ -2,7 +2,7 @@
  *  MsgPop 1.0 by Anthony J. Laurene - 10/1/2014
  *  License - (JS: MIT License, CSS: MIT License)
  */
-
+ 
 #msgPopContainer {
 	position:fixed;
 	z-index:9999;
@@ -237,6 +237,38 @@
 	-webkit-transition: height 250ms ease-in-out;
 	transition: height 250ms ease-in-out;
 }
+
+.msgPopShake {
+	position:relative;
+     -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 200ms; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: 10; /* Safari 4.0 - 8.0 */
+
+    animation-name: msgPopAnimateShake;
+    animation-duration:200ms;
+    animation-iteration-count: 3;   
+	    -webkit-animation-timing-function: ease-in-out; /* Safari 4.0 - 8.0 */
+    animation-timing-function: ease-in-out;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes msgPopAnimateShake {
+    0%   { left:0px; top:0px;}
+    25%  { left:5px; top:5px;}
+    50%  { left:10px; top:0px;}
+    75%  { left:5px; top:5px;}
+    100%  { left:0px; top:0px;}
+}
+
+/* Standard syntax */
+@keyframes msgPopAnimateShake {
+    0%   { left:0px; top:0px;}
+    25%  { left:5px; top:5px;}
+    50%  { left:10px; top:0px;}
+    75%  { left:5px; top:5px;}
+    100%  { left:0px; top:0px;}
+}
+ 
 
 @media all and (min-width: 0px) and (max-width: 640px) {
 	.msgPopContainerSmall{
