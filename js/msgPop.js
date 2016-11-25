@@ -287,7 +287,8 @@ function initMsgPop()
 			MsgID: msgPopMessageID,	  		// Sets message ID for this specific call
 			CssClass: "",					// Adds additional css classes to the message
 			Icon: null,						// Default Icon
-			AnchorTo: null					//Where to anchor control.
+			AnchorTo: null,					//Where to anchor control.
+			Animation: null					//('shake') adds an animation to the message once it is open.
 		}
 
 		//overwrites any missing values with defaults
@@ -332,8 +333,10 @@ function initMsgPop()
 	
 		//Create message content
 		var msgDivContent = '';
-		
-		msgDivContent += '<div class="msgPopTriangle-Up">&nbsp;</div>';	
+		if(obj.AnchorTo != null){
+			msgDivContent += '<div class="msgPopTriangle-Up">&nbsp;</div>';				
+		}
+
 		msgDivContent += '<div class="outerMsgPopTbl">';
 
 		msgDivContent += '<div class="innerMsgPopTbl"><div class="msgPopTable">';
@@ -354,12 +357,18 @@ function initMsgPop()
 		msgDivContent += '</div></div></div>';
 		msg.innerHTML = msgDivContent;
 		
+		
 		//Create Load More & Close All Buttons
 		loadMoreBtn = createLoadMore(msgPopContainer);
 		closeAllBtn = createCloseAll(msgPopContainer);
 		
 		if(obj.AnchorTo == null)
 		{
+			if(obj.Animation != null)
+			{
+				msg.className += ' msgPopShake ';
+			}
+		
 			msgPopContainer.insertBefore(msg, loadMoreBtn);
 			
 			if(showMsg)
