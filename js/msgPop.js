@@ -288,7 +288,8 @@ function initMsgPop()
 			CssClass: "",					// Adds additional css classes to the message
 			Icon: null,						// Default Icon
 			AnchorTo: null,					//Where to anchor control.
-			Animation: null					//('shake') adds an animation to the message once it is open.
+			Animation: null,				//('shake') adds an animation to the message once it is open.
+			DelayOpen: 0
 		}
 
 		//overwrites any missing values with defaults
@@ -362,42 +363,43 @@ function initMsgPop()
 		loadMoreBtn = createLoadMore(msgPopContainer);
 		closeAllBtn = createCloseAll(msgPopContainer);
 		
-		if(obj.AnchorTo == null)
-		{
-			if(obj.Animation != null)
+		setTimeout(function(){
+			if(obj.AnchorTo == null)
 			{
-				msg.className += ' msgPopShake ';
+				if(obj.Animation != null)
+				{
+					msg.className += ' msgPopShake ';
+				}
+
+				msgPopContainer.insertBefore(msg, loadMoreBtn);
+
+				if(showMsg)
+				{
+					openLogic(msg, obj);
+				}
+				else{
+					loadMoreBtn.style.display = 'block';
+				}
+
+				if(msgPopCount > 1){
+					closeAllBtn.style.display = 'block';
+				}
+				else{
+					closeAllBtn.style.display = 'none';
+				}
 			}
-		
-			msgPopContainer.insertBefore(msg, loadMoreBtn);
-			
-			if(showMsg)
-			{
+			else{
+				//Attach Message
+				msg.className += ' msgPopAnchored ';
+
+				var anchorElem = document.getElementById(obj.AnchorTo);
+				msg.style.left = anchorElem.offsetLeft-16+'px';
+				msg.style.marginTop = '16px';
+				anchorElem.parentNode.insertBefore(msg, anchorElem.nextSibling);
+
 				openLogic(msg, obj);
 			}
-			else{
-				loadMoreBtn.style.display = 'block';
-			}
-
-			if(msgPopCount > 1){
-				closeAllBtn.style.display = 'block';
-			}
-			else{
-				closeAllBtn.style.display = 'none';
-			}
-		}
-		else{
-			//Attach Message
-			msg.className += ' msgPopAnchored ';
-			
-			var anchorElem = document.getElementById(obj.AnchorTo);
-			msg.style.left = anchorElem.offsetLeft-16+'px';
-			msg.style.marginTop = '16px';
-			anchorElem.parentNode.insertBefore(msg, anchorElem.nextSibling);
-			
-			openLogic(msg, obj);
-		}
-
+		},obj.DelayOpen);
 
 		return obj.MsgID;
 	};
